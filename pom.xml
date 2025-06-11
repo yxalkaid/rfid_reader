@@ -15,16 +15,16 @@
 
     <dependencies> 
         <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>local-javacsv-jar</artifactId>
+            <groupId>com.local</groupId>
+            <artifactId>javacsv-jar</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/javacsv.jar</systemPath>
         </dependency>
 
         <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>local-ltkjava-jar</artifactId>
+            <groupId>com.local</groupId>
+            <artifactId>ltkjava-jar</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/ltkjava-10.16.0.240-with-dependencies.jar</systemPath>

@@ -1,0 +1,16 @@
+# vscode
+.vscode/
+
+# lib
+lib/
+
+# log
+logs/
+log/
+
+# target
+target/
+
+# output
+output/
+examples/

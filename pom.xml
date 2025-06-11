@@ -9,11 +9,13 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
     </properties>
 
     <dependencies> 
+
+        <!-- javacsv -->
         <dependency>
             <groupId>com.local</groupId>
             <artifactId>javacsv-jar</artifactId>
@@ -22,6 +24,7 @@
             <systemPath>${project.basedir}/lib/javacsv.jar</systemPath>
         </dependency>
 
+        <!-- ltkjava -->
         <dependency>
             <groupId>com.local</groupId>
             <artifactId>ltkjava-jar</artifactId>

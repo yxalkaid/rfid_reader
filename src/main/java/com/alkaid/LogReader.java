@@ -29,12 +29,12 @@ public class LogReader extends BaseReader {
     private CsvWriter csvWriter;
 
     int phaseCount;
-    String currentReadTime;
+    String currentTime;
     String currentEPC;
-    String currentChannelIndex;
-    String currentRfPhase;
-    String currentPeakRSSI;
-    String currentAntennaID;
+    String currentChannel;
+    String currentPhase;
+    String currentRSSI;
+    String currentAntenna;
 
     /**
      * 构造函数
@@ -60,8 +60,9 @@ public class LogReader extends BaseReader {
         LLRPParameter epcp = (LLRPParameter) tr.getEPCParameter();
 
         StringBuilder logString=new StringBuilder();
-        logString.append("EPC: ");
 
+        
+        // 获取EPC
         if (epcp != null) {
             if (epcp.getName().equals("EPC_96")) {
                 EPC_96 epc96 = (EPC_96) epcp;
@@ -70,40 +71,38 @@ public class LogReader extends BaseReader {
                 EPCData epcData = (EPCData) epcp;
                 currentEPC = epcData.getEPC().toString();
             }
-            logString.append(currentEPC);
+            logString.append("EPC: ").append(currentEPC);
         } else {
             logger.error("Could not find EPC in Tag Report");
             System.exit(1);
         }
 
+        // 获取AntennaID
         if (tr.getAntennaID() != null) {
-            currentAntennaID = tr.getAntennaID().getAntennaID().toString();
-            logString.append(" Antenna: ").append(currentAntennaID);
+            currentAntenna = tr.getAntennaID().getAntennaID().toString();
+            logString.append(" Antenna: ").append(currentAntenna);
         }
 
+        // 获取ChannelIndex
         if (tr.getChannelIndex() != null) {
-            currentChannelIndex = tr.getChannelIndex().getChannelIndex().toString();
-            logString.append(" ChanIndex: ").append(currentChannelIndex);
+            currentChannel = tr.getChannelIndex().getChannelIndex().toString();
+            logString.append(" Channel: ").append(currentChannel);
         }
 
         if (tr.getFirstSeenTimestampUTC() != null) {
-            currentReadTime = tr.getFirstSeenTimestampUTC().getMicroseconds().toString();
-            logString.append(" FirstSeen: ").append(currentReadTime);
-        }
-
-        if (tr.getPeakRSSI() != null) {
-            logString.append(" RSSI: ").append(tr.getPeakRSSI().getPeakRSSI().toString());
+            currentTime = tr.getFirstSeenTimestampUTC().getMicroseconds().toString();
+            logString.append(" FirstSeen: ").append(currentTime);
         }
 
         List<Custom> clist = tr.getCustomList();
         for (Custom cd : clist) {
             if (cd.getClass() == ImpinjRFPhaseAngle.class) {
-                currentRfPhase = ((ImpinjRFPhaseAngle) cd).getPhaseAngle().toString();
-                logString.append(" ImpinjPhase: ").append(currentRfPhase);
+                currentPhase = ((ImpinjRFPhaseAngle) cd).getPhaseAngle().toString();
+                logString.append(" Phase: ").append(currentPhase);
             }
             if (cd.getClass() == ImpinjPeakRSSI.class) {
-                currentPeakRSSI = ((ImpinjPeakRSSI) cd).getRSSI().toString();
-                logString.append(" ImpinjPeakRSSI: ").append(currentPeakRSSI);
+                currentRSSI = ((ImpinjPeakRSSI) cd).getRSSI().toString();
+                logString.append(" RSSI: ").append(currentRSSI);
             }
 
         }
@@ -123,7 +122,7 @@ public class LogReader extends BaseReader {
         try {
 
             LocalDateTime localDateTime = LocalDateTime.now();
-            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
             String fileName = "CSV_" + df.format(localDateTime) + ".csv";
 
             File csvFile = new File(parentDir + File.separator + fileName);
@@ -136,6 +135,16 @@ public class LogReader extends BaseReader {
             csvFile.createNewFile();
             this.csvWriter=new CsvWriter(csvFile.getAbsolutePath(), ',',Charset.forName("GBK"));
 
+            this.csvWriter.writeRecord(
+                Arrays.asList(
+                    "time",
+                    "id", 
+                    "channel", 
+                    "phase", 
+                    "rssi",
+                    "antenna"
+                ).toArray(new String[0])
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -148,12 +157,12 @@ public class LogReader extends BaseReader {
         try {
             csvWriter.writeRecord(
                 Arrays.asList(
-                    currentReadTime,
+                    currentTime,
                     currentEPC,
-                    currentChannelIndex,
-                    currentRfPhase,
-                    currentPeakRSSI,
-                    currentAntennaID
+                    currentChannel,
+                    currentPhase,
+                    currentRSSI,
+                    currentAntenna
                 ).toArray(new String[0])
             );
         } catch (Exception e) {

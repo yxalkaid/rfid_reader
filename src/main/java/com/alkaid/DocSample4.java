@@ -651,7 +651,7 @@ public class DocSample4 implements LLRPEndpoint {
           //csvWriter.close()
         }
 
-        System.out.println(epcString);
+        // System.out.println(epcString);
         //logger.debug(output);
 
 

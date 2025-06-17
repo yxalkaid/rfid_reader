@@ -25,6 +25,8 @@ import org.llrp.ltk.generated.messages.ADD_ROSPEC;
 import org.llrp.ltk.generated.messages.ADD_ROSPEC_RESPONSE;
 import org.llrp.ltk.generated.messages.CLOSE_CONNECTION;
 import org.llrp.ltk.generated.messages.CLOSE_CONNECTION_RESPONSE;
+import org.llrp.ltk.generated.messages.DISABLE_ROSPEC;
+import org.llrp.ltk.generated.messages.DISABLE_ROSPEC_RESPONSE;
 import org.llrp.ltk.generated.messages.ENABLE_ROSPEC;
 import org.llrp.ltk.generated.messages.ENABLE_ROSPEC_RESPONSE;
 import org.llrp.ltk.generated.messages.GET_READER_CAPABILITIES;
@@ -116,6 +118,7 @@ public class BaseReader implements LLRPEndpoint {
      */
     public void initialize(String host,String configPath,String ROSpecPath) {
         this.connect(host); // 连接读写器
+        this.disableAllROSpecs(); // 禁用所有ROSpec
         this.enableImpinjExtensions(); // 启用Impinj扩展功能
         this.factoryDefault(); // 恢复出厂设置
         this.getReaderCapabilities(); // 获取读写器能力信息
@@ -124,7 +127,7 @@ public class BaseReader implements LLRPEndpoint {
         this.setReaderConfiguration(configPath); // 设置读写器配置
         this.addRoSpec(ROSpecPath); // 添加ROSpec任务
         this.enable(); // 启用ROSpec
-        this.start(); // 启动ROSpec
+        // this.start(); // 启动ROSpec
     }
 
     /**
@@ -183,6 +186,32 @@ public class BaseReader implements LLRPEndpoint {
             logger.error("CLOSE_CONNECTION: Received invalid response message");
         } catch (TimeoutException ex) {
             logger.info("CLOSE_CONNECTION Timeouts ... continuing anyway");
+        }
+    }
+
+    /**
+     * 停止所有ROSpec
+     */
+    private void disableAllROSpecs() {
+        LLRPMessage response;
+
+        try {
+            logger.info("DISABLING all ROSpecs ...");
+
+            DISABLE_ROSPEC disable = new DISABLE_ROSPEC();
+            disable.setMessageID(getUniqueMessageID());
+            disable.setROSpecID(new UnsignedInteger(0)); // 0 means all ROSpecs
+
+            response = connection.transact(disable, 10000);
+
+            StatusCode status = ((DISABLE_ROSPEC_RESPONSE) response).getLLRPStatus().getStatusCode();
+            if (status.equals(new StatusCode("M_Success"))) {
+                logger.info("Successfully disabled all ROSpecs");
+            } else {
+                logger.warn("Failed to disable all ROSpecs: " + status.toString());
+            }
+        } catch (Exception e) {
+            logger.warn("Could not disable existing ROSpecs", e);
         }
     }
 
@@ -587,7 +616,7 @@ public class BaseReader implements LLRPEndpoint {
     /**
      * 启动ROSpec
      */
-    private void start() {
+    public void start() {
         LLRPMessage response;
         try {
             logger.info("START_ROSPEC ...");
@@ -691,6 +720,6 @@ public class BaseReader implements LLRPEndpoint {
      * @param tr
      */
     protected void logOneTagReport(TagReportData tr) {
-        logger.info(tr.toString());
+        // logger.info(tr.toString());
     }
 }

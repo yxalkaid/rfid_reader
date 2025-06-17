@@ -2,6 +2,7 @@ package com.alkaid;
 
 import java.nio.file.Path;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.PropertyConfigurator;
 
 import lombok.extern.log4j.Log4j;
@@ -28,6 +29,7 @@ public class Main {
         );
 
         try {
+            reader.start();
             Thread.sleep(60000);
         } catch (InterruptedException ex) {
             log.error("Sleep Interrupted");

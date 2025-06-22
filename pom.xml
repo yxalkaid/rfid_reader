@@ -33,6 +33,15 @@
             <systemPath>${project.basedir}/lib/ltkjava-10.16.0.240-with-dependencies.jar</systemPath>
         </dependency>
 
+        <!-- OctaneSDKJava -->
+        <dependency>
+            <groupId>com.local</groupId>
+            <artifactId>OctaneSDKJava-jar</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/OctaneSDKJava-3.0.0.0.jar</systemPath>
+        </dependency>
+
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

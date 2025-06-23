@@ -74,6 +74,8 @@ public class BaseReader implements LLRPEndpoint {
 
     private static Logger logger  = Logger.getLogger(BaseReader.class);
 
+    private boolean isClosed = false;
+
     /**
      * 读写器连接
      */
@@ -134,6 +136,10 @@ public class BaseReader implements LLRPEndpoint {
      * 关闭
      */
     public void close() {
+        if (this.isClosed){
+            return;
+        }
+        
         this.stop();
         this.disconnect();
     }
@@ -151,6 +157,7 @@ public class BaseReader implements LLRPEndpoint {
             logger.info("Initiate LLRP connection to reader");
 
             ((LLRPConnector) connection).connect();
+            this.isClosed = false;
         } catch (LLRPConnectionAttemptFailedException e) {
             e.printStackTrace();
             System.exit(1);
@@ -161,6 +168,10 @@ public class BaseReader implements LLRPEndpoint {
      * 断开连接
      */
     private void disconnect() {
+
+        if(this.isClosed){
+            return;
+        }
 
         LLRPMessage response;
         
@@ -176,6 +187,7 @@ public class BaseReader implements LLRPEndpoint {
             StatusCode status = ((CLOSE_CONNECTION_RESPONSE)response).getLLRPStatus().getStatusCode();
             if (status.equals(new StatusCode("M_Success"))) {
                 logger.info("CLOSE_CONNECTION was successful");
+                this.isClosed = true;
             }
             else {
                 logger.info(response.toXMLString());

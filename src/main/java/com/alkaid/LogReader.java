@@ -123,7 +123,7 @@ public class LogReader extends BaseReader {
 
             LocalDateTime localDateTime = LocalDateTime.now();
             DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
-            String fileName = "CSV_" + df.format(localDateTime) + ".csv";
+            String fileName = "RFID_" + df.format(localDateTime) + ".csv";
 
             File csvFile = new File(parentDir + File.separator + fileName);
 

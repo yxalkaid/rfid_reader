@@ -140,7 +140,8 @@ public class BaseReader implements LLRPEndpoint {
             return;
         }
         
-        this.stop();
+        // this.stop();
+        this.disableAllROSpecs();
         this.disconnect();
     }
 
@@ -693,7 +694,7 @@ public class BaseReader implements LLRPEndpoint {
         // convert all messages received to LTK-XML representation
         // and print them to the console
 
-        logger.debug("Received " + message.getName() + " message asychronously");
+        // logger.debug("Received " + message.getName() + " message asychronously");
 
         if (message.getTypeNum() == RO_ACCESS_REPORT.TYPENUM) {
             RO_ACCESS_REPORT report = (RO_ACCESS_REPORT) message;

@@ -19,16 +19,35 @@ import org.llrp.ltk.types.LLRPParameter;
 
 import com.csvreader.CsvWriter;
 
-public class LogReader extends BaseReader {
+public class LogRecorder extends BaseRecorder {
 
-    private static Logger logger = Logger.getLogger(LogReader.class);
+    private static Logger logger = Logger.getLogger(LogRecorder.class);
 
     /**
      * csv写入
      */
     private CsvWriter csvWriter;
 
-    int phaseCount;
+    /**
+     * 父目录
+     */
+    private String parentDir;
+
+    /**
+     * 是否正在写入
+     */
+    private boolean isWriting;
+
+    /**
+     * 是否详细输出
+     */
+    private boolean verbose;
+
+    /**
+     * 已记录数
+     */
+    int recordCount;
+
     String currentTime;
     String currentEPC;
     String currentChannel;
@@ -41,9 +60,33 @@ public class LogReader extends BaseReader {
      * 
      * @param csvWriter
      */
-    public LogReader(String parentDir) {
+    public LogRecorder(String parentDir,Boolean verbose) {
         super();
-        this.initCsvWriter(parentDir);
+        this.parentDir=parentDir;
+        this.verbose = verbose;
+        this.isWriting = false;
+    }
+
+    @Override
+    public void start() {
+        if (csvWriter == null) {
+            this.recordCount = 0;
+            this.initCsvWriter(parentDir);
+            this.isWriting = true;
+            super.start();
+        } else {
+            logger.error("Cannot start LogRecorder when it is already running");
+        }
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        this.isWriting = false;
+        if (csvWriter != null) {
+            csvWriter.close();
+            csvWriter = null;
+        }
     }
 
     @Override
@@ -59,8 +102,6 @@ public class LogReader extends BaseReader {
     protected void logOneTagReport(TagReportData tr) {
         LLRPParameter epcp = (LLRPParameter) tr.getEPCParameter();
 
-        StringBuilder logString=new StringBuilder();
-
         
         // 获取EPC
         if (epcp != null) {
@@ -71,7 +112,7 @@ public class LogReader extends BaseReader {
                 EPCData epcData = (EPCData) epcp;
                 currentEPC = epcData.getEPC().toString();
             }
-            logString.append("EPC: ").append(currentEPC);
+            
         } else {
             logger.error("Could not find EPC in Tag Report");
             System.exit(1);
@@ -80,38 +121,39 @@ public class LogReader extends BaseReader {
         // 获取AntennaID
         if (tr.getAntennaID() != null) {
             currentAntenna = tr.getAntennaID().getAntennaID().toString();
-            logString.append(" Antenna: ").append(currentAntenna);
         }
 
         // 获取ChannelIndex
         if (tr.getChannelIndex() != null) {
             currentChannel = tr.getChannelIndex().getChannelIndex().toString();
-            logString.append(" Channel: ").append(currentChannel);
         }
 
         if (tr.getFirstSeenTimestampUTC() != null) {
             currentTime = tr.getFirstSeenTimestampUTC().getMicroseconds().toString();
-            logString.append(" FirstSeen: ").append(currentTime);
         }
 
         List<Custom> clist = tr.getCustomList();
         for (Custom cd : clist) {
             if (cd.getClass() == ImpinjRFPhaseAngle.class) {
                 currentPhase = ((ImpinjRFPhaseAngle) cd).getPhaseAngle().toString();
-                logString.append(" Phase: ").append(currentPhase);
             }
             if (cd.getClass() == ImpinjPeakRSSI.class) {
                 currentRSSI = ((ImpinjPeakRSSI) cd).getRSSI().toString();
-                logString.append(" RSSI: ").append(currentRSSI);
             }
 
         }
+        
+        this.recordCount += 1;
 
-        System.out.println(logString.toString());
-        System.out.println("----count ---------" + phaseCount);
-        phaseCount += 1;
+        if (this.verbose) {
+            this.showDetails();    
+        } else {
+            System.out.print("\rRecordCount: " + recordCount);
+        }
 
-        this.writeToCsv();
+        if(this.isWriting){
+            this.writeToCsv();
+        }
     }
 
     /**
@@ -133,8 +175,9 @@ public class LogReader extends BaseReader {
             }
 
             csvFile.createNewFile();
-            this.csvWriter=new CsvWriter(csvFile.getAbsolutePath(), ',',Charset.forName("GBK"));
+            logger.info("Writing to " + csvFile.getAbsolutePath());
 
+            this.csvWriter=new CsvWriter(csvFile.getAbsolutePath(), ',',Charset.forName("GBK"));
             this.csvWriter.writeRecord(
                 Arrays.asList(
                     "time",
@@ -148,6 +191,22 @@ public class LogReader extends BaseReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * 显示详细数据
+     */
+    private void showDetails() {
+        StringBuilder logString=new StringBuilder();
+        logString.append("EPC: ").append(currentEPC);
+        logString.append(" Antenna: ").append(currentAntenna);
+        logString.append(" Channel: ").append(currentChannel);
+        logString.append(" FirstSeen: ").append(currentTime);
+        logString.append(" Phase: ").append(currentPhase);
+        logString.append(" RSSI: ").append(currentRSSI);
+        System.out.println(logString.toString());
+        System.out.println("----count ---------" + recordCount);
     }
 
     /**

@@ -25,8 +25,17 @@
             <!-- 天线ID -->
             <AntennaIDs>1</AntennaIDs>
             <AISpecStopTrigger>
-                <AISpecStopTriggerType>Null</AISpecStopTriggerType>
+                <AISpecStopTriggerType>Tag_Observation</AISpecStopTriggerType>
                 <DurationTrigger>0</DurationTrigger>
+
+                <!-- 读取若干标签后停止 -->
+                <TagObservationTrigger>
+                    <TriggerType>Upon_Seeing_N_Tags_Or_Timeout</TriggerType>
+                    <NumberOfTags>10000</NumberOfTags>
+                    <NumberOfAttempts>1</NumberOfAttempts>
+                    <T>500</T>
+                    <Timeout>0</Timeout>
+                </TagObservationTrigger>
             </AISpecStopTrigger>
             
             

@@ -1,5 +1,6 @@
 package com.alkaid;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -70,9 +71,9 @@ import org.llrp.ltk.util.Util;
 /**
  * 基础阅读器
  */
-public class BaseReader implements LLRPEndpoint {
+public class BaseRecorder implements LLRPEndpoint, Closeable {
 
-    private static Logger logger  = Logger.getLogger(BaseReader.class);
+    private static Logger logger  = Logger.getLogger(BaseRecorder.class);
 
     private boolean isClosed = false;
 
@@ -101,7 +102,7 @@ public class BaseReader implements LLRPEndpoint {
     /**
      * 构造函数
      */
-    public BaseReader() {
+    public BaseRecorder() {
     }
 
     /**
@@ -129,12 +130,12 @@ public class BaseReader implements LLRPEndpoint {
         this.setReaderConfiguration(configPath); // 设置读写器配置
         this.addRoSpec(ROSpecPath); // 添加ROSpec任务
         this.enable(); // 启用ROSpec
-        // this.start(); // 启动ROSpec
     }
 
     /**
      * 关闭
      */
+    @Override
     public void close() {
         if (this.isClosed){
             return;
@@ -658,7 +659,7 @@ public class BaseReader implements LLRPEndpoint {
     /**
      * 停止ROSpec
      */
-    private void stop() {
+    public void stop() {
         LLRPMessage response;
         try {
             logger.info("STOP_ROSPEC ...");

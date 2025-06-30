@@ -19,9 +19,12 @@ import org.llrp.ltk.types.LLRPParameter;
 
 import com.csvreader.CsvWriter;
 
-public class LogRecorder extends BaseRecorder {
+/**
+ * CSV记录器, 将数据记录到csv文件
+ */
+public class CsvRecorder extends BaseRecorder {
 
-    private static Logger logger = Logger.getLogger(LogRecorder.class);
+    private static Logger logger = Logger.getLogger(CsvRecorder.class);
 
     /**
      * csv写入
@@ -60,7 +63,7 @@ public class LogRecorder extends BaseRecorder {
      * 
      * @param csvWriter
      */
-    public LogRecorder(String parentDir,Boolean verbose) {
+    public CsvRecorder(String parentDir,Boolean verbose) {
         super();
         this.parentDir=parentDir;
         this.verbose = verbose;

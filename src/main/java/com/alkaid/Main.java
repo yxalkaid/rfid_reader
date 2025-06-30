@@ -1,9 +1,7 @@
 package com.alkaid;
 
-import java.net.InetAddress;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.Scanner;
 
 import org.apache.log4j.PropertyConfigurator;
 
@@ -29,7 +27,8 @@ public class Main {
         // BasicConfigurator.configure();
         PropertyConfigurator.configure(Path.of(RESOURCE_PATH, "log4j.properties").toString());
 
-        final LogRecorder recorder = new LogRecorder("./output",false);
+        final CsvRecorder recorder = new CsvRecorder("./output",false);
+        // final EPCRecorder recorder = new EPCRecorder();
         String configPath=Path.of(RESOURCE_PATH, "SET_READER_CONFIG.xml").toString();
         String roSpecPath=Path.of(RESOURCE_PATH, "ADD_ROSPEC.xml").toString();
         recorder.initialize(
@@ -64,31 +63,16 @@ public class Main {
             System.out.println("Shutdown complete.");
         }));
 
+
         try {
+            // Runnable listener = new UdpListener(recorder,8081);
+            Runnable listener = new CommandListener(recorder,1000*20);
 
-            // 单次采集时长
-            long duration=1000*20;
-
-            Scanner input = new Scanner(System.in);
-            boolean flag=true;
-            while (flag) {
-                flag=false;
-                System.out.println("Please enter \"P\" to start collection");
-                String line = input.nextLine();
-                if (line.toUpperCase().equals("P")) {
-                    flag=true;
-                }
-
-                if (flag){
-                    log.info(String.format("Start collecting, expected to last for %ds", duration/1000));
-                    recorder.start();
-                    Thread.sleep(duration);
-                    recorder.stop();
-                    log.info("End collection");
-                }
-            }
-            input.close();
-        } catch (InterruptedException ex) {
+            Thread listenerThread = new Thread(listener);
+            listenerThread.start();
+            listenerThread.join();
+            // listenerThread.interrupt();
+        } catch (InterruptedException e) {
             log.error("Sleep Interrupted");
         }
 

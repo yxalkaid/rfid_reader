@@ -23,7 +23,7 @@
 
         <AISpec>
             <!-- 天线ID -->
-            <AntennaIDs>1</AntennaIDs>
+            <AntennaIDs>1 2 3</AntennaIDs>
             <AISpecStopTrigger>
                 <AISpecStopTriggerType>Null</AISpecStopTriggerType>
                 <DurationTrigger>0</DurationTrigger>

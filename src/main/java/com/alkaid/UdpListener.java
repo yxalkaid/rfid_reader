@@ -5,6 +5,9 @@ import java.net.DatagramSocket;
 
 import lombok.extern.log4j.Log4j;
 
+/**
+ * UDP监听控制器
+ */
 @Log4j
 public class UdpListener implements Runnable {
     

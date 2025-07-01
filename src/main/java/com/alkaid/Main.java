@@ -65,7 +65,11 @@ public class Main {
 
 
         try {
+
+            // UDP控制
             // Runnable listener = new UdpListener(recorder,8081);
+
+            // 命令行控制
             Runnable listener = new CommandListener(recorder,1000*20);
 
             Thread listenerThread = new Thread(listener);

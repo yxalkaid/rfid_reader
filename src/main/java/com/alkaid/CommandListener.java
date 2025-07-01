@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 import lombok.extern.log4j.Log4j;
 
+/**
+ * 命令行监听控制器
+ */
 @Log4j
 public class CommandListener implements Runnable {
 

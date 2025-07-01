@@ -69,7 +69,7 @@ import org.llrp.ltk.types.UnsignedShortArray;
 import org.llrp.ltk.util.Util;
 
 /**
- * 基础阅读器
+ * 基础记录器
  */
 public class BaseRecorder implements LLRPEndpoint, Closeable {
 

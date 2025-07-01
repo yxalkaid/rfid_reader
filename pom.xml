@@ -17,36 +17,44 @@
 
         <!-- javacsv -->
         <dependency>
+            <groupId>net.sourceforge.javacsv</groupId>
+            <artifactId>javacsv</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <!-- <dependency>
             <groupId>com.local</groupId>
             <artifactId>javacsv-jar</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/javacsv.jar</systemPath>
-        </dependency>
+        </dependency> -->
 
         <!-- ltkjava -->
         <dependency>
+            <groupId>com.local</groupId>
+            <artifactId>ltkjava</artifactId>
+            <version>10.16.0.240</version>
+        </dependency>
+        <!-- <dependency>
             <groupId>com.local</groupId>
             <artifactId>ltkjava-jar</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/ltkjava-10.16.0.240-with-dependencies.jar</systemPath>
-        </dependency>
-
-        <!-- OctaneSDKJava -->
-        <dependency>
-            <groupId>com.local</groupId>
-            <artifactId>OctaneSDKJava-jar</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/OctaneSDKJava-3.0.0.0.jar</systemPath>
-        </dependency>
+        </dependency> -->
 
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
+        </dependency>
+
+        <!-- protobuf -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.21.12</version>
         </dependency>
     </dependencies>
 </project>

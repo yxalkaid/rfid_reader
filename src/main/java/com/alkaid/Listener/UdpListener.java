@@ -1,7 +1,9 @@
-package com.alkaid;
+package com.alkaid.Listener;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+
+import com.alkaid.Recorder.BaseRecorder;
 
 import lombok.extern.log4j.Log4j;
 
@@ -44,6 +46,7 @@ public class UdpListener implements Runnable {
                 String command = new String(packet.getData(), 0, packet.getLength()).trim();
                 log.info("Received UDP command: " + command);
 
+                // 处理命令
                 if ("START".equalsIgnoreCase(command)) {
                     recorder.start();
                 } else if ("STOP".equalsIgnoreCase(command)) {

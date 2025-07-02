@@ -1,4 +1,4 @@
-package com.alkaid;
+package com.alkaid.Recorder;
 
 import java.util.HashSet;
 
@@ -9,11 +9,11 @@ import org.llrp.ltk.generated.parameters.TagReportData;
 import org.llrp.ltk.types.LLRPParameter;
 
 /**
- * EPC记录器，读取所有出现的EPC
+ * EPC记录器，打印所有出现的EPC
  */
 public class EPCRecorder extends BaseRecorder {
 
-    private static Logger logger = Logger.getLogger(CsvRecorder.class);
+    private static Logger logger = Logger.getLogger(EPCRecorder.class);
 
     /**
      * 已记录数

@@ -1,122 +1,195 @@
-package com.alkaid;
+package com.alkaid.Recorder;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.nio.charset.Charset;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.TimeoutException;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.jdom.JDOMException;
-
-import org.llrp.ltk.exceptions.*;
-import org.llrp.ltk.generated.enumerations.*;
-import org.llrp.ltk.generated.interfaces.*;
-import org.llrp.ltk.generated.messages.*;
-import org.llrp.ltk.generated.parameters.*;
-import org.llrp.ltk.types.*;
+import org.llrp.ltk.exceptions.InvalidLLRPMessageException;
+import org.llrp.ltk.generated.custom.messages.IMPINJ_ENABLE_EXTENSIONS;
+import org.llrp.ltk.generated.custom.messages.IMPINJ_ENABLE_EXTENSIONS_RESPONSE;
+import org.llrp.ltk.generated.enumerations.AISpecStopTriggerType;
+import org.llrp.ltk.generated.enumerations.AirProtocols;
+import org.llrp.ltk.generated.enumerations.GetReaderCapabilitiesRequestedData;
+import org.llrp.ltk.generated.enumerations.GetReaderConfigRequestedData;
+import org.llrp.ltk.generated.enumerations.ROSpecStartTriggerType;
+import org.llrp.ltk.generated.enumerations.ROSpecState;
+import org.llrp.ltk.generated.enumerations.ROSpecStopTriggerType;
+import org.llrp.ltk.generated.enumerations.StatusCode;
+import org.llrp.ltk.generated.interfaces.SpecParameter;
+import org.llrp.ltk.generated.messages.ADD_ROSPEC;
+import org.llrp.ltk.generated.messages.ADD_ROSPEC_RESPONSE;
+import org.llrp.ltk.generated.messages.CLOSE_CONNECTION;
+import org.llrp.ltk.generated.messages.CLOSE_CONNECTION_RESPONSE;
+import org.llrp.ltk.generated.messages.DISABLE_ROSPEC;
+import org.llrp.ltk.generated.messages.DISABLE_ROSPEC_RESPONSE;
+import org.llrp.ltk.generated.messages.ENABLE_ROSPEC;
+import org.llrp.ltk.generated.messages.ENABLE_ROSPEC_RESPONSE;
+import org.llrp.ltk.generated.messages.GET_READER_CAPABILITIES;
+import org.llrp.ltk.generated.messages.GET_READER_CAPABILITIES_RESPONSE;
+import org.llrp.ltk.generated.messages.GET_READER_CONFIG;
+import org.llrp.ltk.generated.messages.GET_READER_CONFIG_RESPONSE;
+import org.llrp.ltk.generated.messages.READER_EVENT_NOTIFICATION;
+import org.llrp.ltk.generated.messages.RO_ACCESS_REPORT;
+import org.llrp.ltk.generated.messages.SET_READER_CONFIG;
+import org.llrp.ltk.generated.messages.SET_READER_CONFIG_RESPONSE;
+import org.llrp.ltk.generated.messages.START_ROSPEC;
+import org.llrp.ltk.generated.messages.START_ROSPEC_RESPONSE;
+import org.llrp.ltk.generated.messages.STOP_ROSPEC;
+import org.llrp.ltk.generated.messages.STOP_ROSPEC_RESPONSE;
+import org.llrp.ltk.generated.parameters.AISpec;
+import org.llrp.ltk.generated.parameters.AISpecStopTrigger;
+import org.llrp.ltk.generated.parameters.AntennaConfiguration;
+import org.llrp.ltk.generated.parameters.Custom;
+import org.llrp.ltk.generated.parameters.GeneralDeviceCapabilities;
+import org.llrp.ltk.generated.parameters.InventoryParameterSpec;
+import org.llrp.ltk.generated.parameters.ROBoundarySpec;
+import org.llrp.ltk.generated.parameters.ROSpec;
+import org.llrp.ltk.generated.parameters.ROSpecStartTrigger;
+import org.llrp.ltk.generated.parameters.ROSpecStopTrigger;
+import org.llrp.ltk.generated.parameters.TagReportData;
+import org.llrp.ltk.generated.parameters.TransmitPowerLevelTableEntry;
+import org.llrp.ltk.generated.parameters.UHFBandCapabilities;
 import org.llrp.ltk.net.LLRPConnection;
 import org.llrp.ltk.net.LLRPConnectionAttemptFailedException;
 import org.llrp.ltk.net.LLRPConnector;
 import org.llrp.ltk.net.LLRPEndpoint;
+import org.llrp.ltk.types.Bit;
+import org.llrp.ltk.types.LLRPMessage;
+import org.llrp.ltk.types.SignedShort;
+import org.llrp.ltk.types.UnsignedByte;
+import org.llrp.ltk.types.UnsignedInteger;
+import org.llrp.ltk.types.UnsignedShort;
+import org.llrp.ltk.types.UnsignedShortArray;
 import org.llrp.ltk.util.Util;
 
-import com.csvreader.CsvWriter;
+/**
+ * 基础记录器
+ */
+public class BaseRecorder implements LLRPEndpoint, Closeable {
 
-import org.llrp.ltk.generated.custom.enumerations.*;
-import org.llrp.ltk.generated.custom.messages.*;
-import org.llrp.ltk.generated.custom.parameters.*;
+    private static Logger logger  = Logger.getLogger(BaseRecorder.class);
 
+    private boolean isClosed = false;
 
-public class DocSample4 implements LLRPEndpoint {
-
+    /**
+     * 读写器连接
+     */
     private LLRPConnection connection;
-    
-    public static String WRITE_CSV_FILE_PATH;
-    
-    static CsvWriter csvWriter ;
 
-    private static Logger logger  = Logger.getLogger("org.impinj.llrp.ltk.examples.docsample4");
+    /**
+     * 消息ID
+     */
+    private int MessageID = 23;
+
+    /**
+     * ROSpec
+     */
     private ROSpec rospec;
-    private int MessageID = 23; // a random starting point
+
+    
     private UnsignedInteger modelName;
     UnsignedShort maxPowerIndex;
     SignedShort maxPower;
     UnsignedShort channelIndex;
     UnsignedShort hopTableID;
 
-    // stuff to calculate velocity
-    int           phaseCount;
-    String        lastEPCData;
-    UnsignedShort lastAntennaID;
-    UnsignedShort lastChannelIndex;
-    UnsignedLong  lastReadTime;
-    String        currentEPCData;
-    UnsignedShort currentAntennaID;
-    UnsignedShort currentChannelIndex;
-    UnsignedLong  currentReadTime;
-    double        lastRfPhase;
-    double        currentRfPhase;
-    double        currentPeakRSSI;
+    /**
+     * 构造函数
+     */
+    public BaseRecorder() {
+    }
 
+    /**
+     * 获取一个唯一消息ID
+     * @return
+     */
     private UnsignedInteger getUniqueMessageID() {
         return new UnsignedInteger(MessageID++);
     }
 
-    public DocSample4() {
-        lastEPCData = null;
-        lastAntennaID = new UnsignedShort(0);
-        lastChannelIndex = new UnsignedShort(0);
-        lastReadTime = new UnsignedLong(0L);
-        lastRfPhase = 0;
+    /**
+     * 初始化
+     * @param host
+     * @param configPath
+     * @param ROSpecPath
+     */
+    public void initialize(String host,String configPath,String ROSpecPath) {
+        this.connect(host); // 连接读写器
+        this.disableAllROSpecs(); // 禁用所有ROSpec
+        this.enableImpinjExtensions(); // 启用Impinj扩展功能
+        this.factoryDefault(); // 恢复出厂设置
+        this.getReaderCapabilities(); // 获取读写器能力信息
+        this.getReaderConfiguration(); // 获取读写器配置信息
+
+        this.setReaderConfiguration(configPath); // 设置读写器配置
+        this.addRoSpec(ROSpecPath); // 添加ROSpec任务
+        this.enable(); // 启用ROSpec
+    }
+
+    /**
+     * 关闭
+     */
+    @Override
+    public void close() {
+        if (this.isClosed){
+            return;
+        }
         
-    }
-    public DocSample4(String path) {
-        lastEPCData = null;
-        lastAntennaID = new UnsignedShort(0);
-        lastChannelIndex = new UnsignedShort(0);
-        lastReadTime = new UnsignedLong(0L);
-        lastRfPhase = 0;
-        WRITE_CSV_FILE_PATH = path;
+        // this.stop();
+        this.disableAllROSpecs();
+        this.disconnect();
     }
 
-    private void connect(String ip) {
-        // create client-initiated LLRP connection
+    /**
+     * 连接读写器
+     * @param ip
+     */
+    private void connect(String host) {
 
-        connection = new LLRPConnector(this, ip);
+        logger.info("Connecting to " + host);
+        this.connection = new LLRPConnector(this, host);
 
-        // connect to reader
-        // LLRPConnector.connect waits for successful
-        // READER_EVENT_NOTIFICATION from reader
         try {
             logger.info("Initiate LLRP connection to reader");
+
             ((LLRPConnector) connection).connect();
-        } catch (LLRPConnectionAttemptFailedException e1) {
-            e1.printStackTrace();
+            this.isClosed = false;
+        } catch (LLRPConnectionAttemptFailedException e) {
+            e.printStackTrace();
             System.exit(1);
         }
     }
 
+    /**
+     * 断开连接
+     */
     private void disconnect() {
+
+        if(this.isClosed){
+            return;
+        }
+
         LLRPMessage response;
-        CLOSE_CONNECTION close = new CLOSE_CONNECTION();
-        close.setMessageID(getUniqueMessageID());
+        
         try {
-            // don't wait around too long for close
+            logger.info("CLOSE_CONNECTION ...");
+
+            CLOSE_CONNECTION close = new CLOSE_CONNECTION();
+            close.setMessageID(getUniqueMessageID());
+
             response = connection.transact(close, 4000);
 
-            // check whether ROSpec addition was successful
+            // 
             StatusCode status = ((CLOSE_CONNECTION_RESPONSE)response).getLLRPStatus().getStatusCode();
             if (status.equals(new StatusCode("M_Success"))) {
                 logger.info("CLOSE_CONNECTION was successful");
+                this.isClosed = true;
             }
             else {
                 logger.info(response.toXMLString());
@@ -130,11 +203,41 @@ public class DocSample4 implements LLRPEndpoint {
         }
     }
 
+    /**
+     * 停止所有ROSpec
+     */
+    private void disableAllROSpecs() {
+        LLRPMessage response;
+
+        try {
+            logger.info("DISABLING all ROSpecs ...");
+
+            DISABLE_ROSPEC disable = new DISABLE_ROSPEC();
+            disable.setMessageID(getUniqueMessageID());
+            disable.setROSpecID(new UnsignedInteger(0)); // 0 means all ROSpecs
+
+            response = connection.transact(disable, 10000);
+
+            StatusCode status = ((DISABLE_ROSPEC_RESPONSE) response).getLLRPStatus().getStatusCode();
+            if (status.equals(new StatusCode("M_Success"))) {
+                logger.info("Successfully disabled all ROSpecs");
+            } else {
+                logger.warn("Failed to disable all ROSpecs: " + status.toString());
+            }
+        } catch (Exception e) {
+            logger.warn("Could not disable existing ROSpecs", e);
+        }
+    }
+
+    /**
+     * 启用扩展功能
+     */
     private void enableImpinjExtensions() {
         LLRPMessage response;
 
         try {
             logger.info("IMPINJ_ENABLE_EXTENSIONS ...");
+
             IMPINJ_ENABLE_EXTENSIONS ena = new IMPINJ_ENABLE_EXTENSIONS();
             ena.setMessageID(getUniqueMessageID());
 
@@ -142,12 +245,12 @@ public class DocSample4 implements LLRPEndpoint {
 
             StatusCode status = ((IMPINJ_ENABLE_EXTENSIONS_RESPONSE)response).getLLRPStatus().getStatusCode();
             if (status.equals(new StatusCode("M_Success"))) {
-                    logger.info("IMPINJ_ENABLE_EXTENSIONS was successful");
+                logger.info("IMPINJ_ENABLE_EXTENSIONS was successful");
             }
             else {
-                    logger.info(response.toXMLString());
-                    logger.info("IMPINJ_ENABLE_EXTENSIONS Failure");
-                    System.exit(1);
+                logger.info(response.toXMLString());
+                logger.info("IMPINJ_ENABLE_EXTENSIONS Failure");
+                System.exit(1);
             }
         } catch (InvalidLLRPMessageException ex) {
             logger.error("Could not process IMPINJ_ENABLE_EXTENSIONS response");
@@ -158,26 +261,29 @@ public class DocSample4 implements LLRPEndpoint {
         }
     }
 
+    /**
+     * 恢复出厂设置
+     */
     private void factoryDefault() {
         LLRPMessage response;
 
         try {
-            // factory default the reader
             logger.info("SET_READER_CONFIG with factory default ...");
+
             SET_READER_CONFIG set = new SET_READER_CONFIG();
             set.setMessageID(getUniqueMessageID());
-            set.setResetToFactoryDefault(new Bit(true));
+            set.setResetToFactoryDefault(new Bit(true)); // 设置为恢复出厂设置
+
             response =  connection.transact(set, 10000);
 
-            // check whether ROSpec addition was successful
             StatusCode status = ((SET_READER_CONFIG_RESPONSE)response).getLLRPStatus().getStatusCode();
             if (status.equals(new StatusCode("M_Success"))) {
-                    logger.info("SET_READER_CONFIG Factory Default was successful");
+                logger.info("SET_READER_CONFIG Factory Default was successful");
             }
             else {
-                    logger.info(response.toXMLString());
-                    logger.info("SET_READER_CONFIG Factory Default Failure");
-                    System.exit(1);
+                logger.info(response.toXMLString());
+                logger.info("SET_READER_CONFIG Factory Default Failure");
+                System.exit(1);
             }
 
         } catch (Exception e) {
@@ -186,6 +292,9 @@ public class DocSample4 implements LLRPEndpoint {
         }
     }
 
+    /**
+     * 获取读写器能力信息
+     */
     private void getReaderCapabilities() {
         LLRPMessage response;
         GET_READER_CAPABILITIES_RESPONSE gresp;
@@ -196,6 +305,7 @@ public class DocSample4 implements LLRPEndpoint {
                         GetReaderCapabilitiesRequestedData.All);
         get.setRequestedData(data);
         get.setMessageID(getUniqueMessageID());
+
         logger.info("Sending GET_READER_CAPABILITIES message  ...");
         try {
             response =  connection.transact(get, 10000);
@@ -251,6 +361,9 @@ public class DocSample4 implements LLRPEndpoint {
         }
     }
 
+    /**
+     * 获取读写器配置信息
+     */
     private void getReaderConfiguration() {
         LLRPMessage response;
         GET_READER_CONFIG_RESPONSE gresp;
@@ -302,6 +415,10 @@ public class DocSample4 implements LLRPEndpoint {
         }
     }
 
+    /**
+     * 通过Objects构建ROSpec
+     * @param xml
+     */
     private ADD_ROSPEC buildROSpecFromObjects() {
         logger.info("Building ADD_ROSPEC message from scratch ...");
         ADD_ROSPEC addRoSpec = new ADD_ROSPEC();
@@ -359,15 +476,16 @@ public class DocSample4 implements LLRPEndpoint {
         return addRoSpec;
     }
 
-    private ADD_ROSPEC buildROSpecFromFile() {
+    /**
+     * 通过配置文件构建ROSpec
+     * @return
+     */
+    private ADD_ROSPEC buildROSpecFromFile(String path) {
         logger.info("Loading ADD_ROSPEC message from file ADD_ROSPEC.xml ...");
         try {
-
-            // TODO: 设置配置文件路径
             LLRPMessage addRospec = Util.loadXMLLLRPMessage(
-                new File("./src/main/resources/ADD_ROSPEC.xml"));
+                new File(path));
             // TODO make sure this is an ADD_ROSPEC message 
-
 
             return (ADD_ROSPEC) addRospec;
         } catch (FileNotFoundException ex) {
@@ -386,14 +504,17 @@ public class DocSample4 implements LLRPEndpoint {
         return null;
     }
 
-    private void setReaderConfiguration() {
+    /**
+     * 设置Reader配置
+     */
+    private void setReaderConfiguration(String path) {
         LLRPMessage response;
         
         logger.info("Loading SET_READER_CONFIG message from file SET_READER_CONFIG.xml ...");
 
         try {
             LLRPMessage setConfigMsg = Util.loadXMLLLRPMessage(
-            new File("./src/main/resources/SET_READER_CONFIG.xml"));
+            new File(path));
             // TODO make sure this is an SET_READER_CONFIG message
 
             response = connection.transact(setConfigMsg, 10000);
@@ -427,13 +548,17 @@ public class DocSample4 implements LLRPEndpoint {
         }
     }
 
-    private void addRoSpec(boolean xml) {
+    /**
+     * 添加ROSpec
+     * @param xml
+     */
+    private void addRoSpec(String path) {
         LLRPMessage response;
 
         ADD_ROSPEC addRospec = null;
 
-        if(xml) {
-            addRospec = buildROSpecFromFile();
+        if(path != null) {
+            addRospec = buildROSpecFromFile(path);
         } else {
             addRospec = buildROSpecFromObjects();
         }
@@ -448,12 +573,21 @@ public class DocSample4 implements LLRPEndpoint {
             // check whether ROSpec addition was successful
             StatusCode status = ((ADD_ROSPEC_RESPONSE)response).getLLRPStatus().getStatusCode();
             if (status.equals(new StatusCode("M_Success"))) {
-                    logger.info("ADD_ROSPEC was successful");
+                logger.info("ADD_ROSPEC was successful");
+
+                // 打印ROSpec信息
+                logger.info("ROSpecID: " + rospec.getROSpecID());
+                List<SpecParameter> specList = rospec.getSpecParameterList();
+                if (!specList.isEmpty()) {
+                    for  (SpecParameter specParam : specList) {
+                        logger.info(specParam.toString());
+                    }
+                }
             }
             else {
-                    logger.info(response.toXMLString());
-                    logger.info("ADD_ROSPEC failures");
-                    System.exit(1);
+                logger.info(response.toXMLString());
+                logger.info("ADD_ROSPEC failures");
+                System.exit(1);
             }
         } catch (InvalidLLRPMessageException ex) {
             logger.error("Could not display response string");
@@ -463,6 +597,9 @@ public class DocSample4 implements LLRPEndpoint {
         }
     }
 
+    /**
+     * 启用ROSpec
+     */
     private void enable() {
         LLRPMessage response;
         try {
@@ -477,12 +614,12 @@ public class DocSample4 implements LLRPEndpoint {
             // check whether ROSpec addition was successful
             StatusCode status = ((ENABLE_ROSPEC_RESPONSE)response).getLLRPStatus().getStatusCode();
             if (status.equals(new StatusCode("M_Success"))) {
-                    logger.info("ENABLE_ROSPEC was successful");
+                logger.info("ENABLE_ROSPEC was successful");
             }
             else {
-                    logger.error(response.toXMLString());
-                    logger.info("ENABLE_ROSPEC_RESPONSE failed ");
-                    System.exit(1);
+                logger.error(response.toXMLString());
+                logger.info("ENABLE_ROSPEC_RESPONSE failed ");
+                System.exit(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -490,7 +627,10 @@ public class DocSample4 implements LLRPEndpoint {
         }
     }
 
-    private void start() {
+    /**
+     * 启动ROSpec
+     */
+    public void start() {
         LLRPMessage response;
         try {
             logger.info("START_ROSPEC ...");
@@ -503,12 +643,12 @@ public class DocSample4 implements LLRPEndpoint {
             // check whether ROSpec addition was successful
             StatusCode status = ((START_ROSPEC_RESPONSE)response).getLLRPStatus().getStatusCode();
             if (status.equals(new StatusCode("M_Success"))) {
-                    logger.info("START_ROSPEC was successful");
+                logger.info("START_ROSPEC was successful");
             }
             else {
-                    logger.error(response.toXMLString());
-                    logger.info("START_ROSPEC_RESPONSE failed ");
-                    System.exit(1);
+                logger.error(response.toXMLString());
+                logger.info("START_ROSPEC_RESPONSE failed ");
+                System.exit(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -516,7 +656,10 @@ public class DocSample4 implements LLRPEndpoint {
         }
     }
 
-    private void stop() {
+    /**
+     * 停止ROSpec
+     */
+    public void stop() {
         LLRPMessage response;
         try {
             logger.info("STOP_ROSPEC ...");
@@ -529,12 +672,12 @@ public class DocSample4 implements LLRPEndpoint {
             // check whether ROSpec addition was successful
             StatusCode status = ((STOP_ROSPEC_RESPONSE)response).getLLRPStatus().getStatusCode();
             if (status.equals(new StatusCode("M_Success"))) {
-                    logger.info("STOP_ROSPEC was successful");
+                logger.info("STOP_ROSPEC was successful");
             }
             else {
-                    logger.error(response.toXMLString());
-                    logger.info("STOP_ROSPEC_RESPONSE failed ");
-                    System.exit(1);
+                logger.error(response.toXMLString());
+                logger.info("STOP_ROSPEC_RESPONSE failed ");
+                System.exit(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -542,191 +685,17 @@ public class DocSample4 implements LLRPEndpoint {
         }
     }
 
-    private void logOneCustom(Custom cust) {
-
-        String output = "";
-        if(!cust.getVendorIdentifier().equals(25882)) {
-            logger.error("Non Impinj Extension Found in message");
-            return;
-        }
+    @Override
+    public void errorOccured(String s) {
+        logger.error(s);
     }
 
-    private void logOneTagReport(TagReportData tr) {
-        // As an example here, we'll just get the stuff out of here and
-        // for a super long string
-
-        LLRPParameter epcp = (LLRPParameter) tr.getEPCParameter();
-
-        // epc is not optional, so we should fail if we can't find it
-        String epcString = "EPC: ";
-        String ename = "";
-
-        if(epcp != null) {
-            if( epcp.getName().equals("EPC_96")) {
-                EPC_96 epc96 = (EPC_96) epcp;
-                epcString += epc96.getEPC().toString();
-                ename = epc96.getEPC().toString();
-                currentEPCData = epc96.getEPC().toString();
-            } else if ( epcp.getName().equals("EPCData")) {
-                EPCData epcData = (EPCData) epcp;
-                epcString += epcData.getEPC().toString();
-                ename = epcData.getEPC().toString();
-                currentEPCData = epcData.getEPC().toString();
-            }
-        } else {
-            logger.error("Could not find EPC in Tag Report");
-            System.exit(1);
-        }
-
-        // all of these values are optional, so check their non-nullness first
-        if(tr.getAntennaID() != null) {
-            epcString += " Antenna: " +
-                    tr.getAntennaID().getAntennaID().toString();
-            currentAntennaID = tr.getAntennaID().getAntennaID();
-        }
-
-        if(tr.getChannelIndex() != null) {
-            epcString += " ChanIndex: " +
-                    tr.getChannelIndex().getChannelIndex().toString();
-            currentChannelIndex = tr.getChannelIndex().getChannelIndex();
-        }
-
-        if( tr.getFirstSeenTimestampUTC() != null) {
-            epcString += " FirstSeen: " +
-                    tr.getFirstSeenTimestampUTC().getMicroseconds().toString();
-            currentReadTime = tr.getFirstSeenTimestampUTC().getMicroseconds();
-        }
-
-        if(tr.getInventoryParameterSpecID() != null) {
-            epcString += " ParamSpecID: " +
-                    tr.getInventoryParameterSpecID().getInventoryParameterSpecID().toString();
-        }
-
-        if(tr.getLastSeenTimestampUTC() != null) {
-            epcString += " LastTime: " +
-                    tr.getLastSeenTimestampUTC().getMicroseconds().toString();
-        }
-
-        if(tr.getPeakRSSI() != null) {
-            epcString += " RSSI: " +
-                    tr.getPeakRSSI().getPeakRSSI().toString();
-        }
-
-        if(tr.getROSpecID() != null) {
-            epcString += " ROSpecID: " +
-                    tr.getROSpecID().getROSpecID().toString();
-        }
-
-        if(tr.getTagSeenCount() != null) {
-            epcString += " SeenCount: " +
-                    tr.getTagSeenCount().getTagCount().toString();
-        }
-
-        List<Custom> clist = tr.getCustomList();
-
-        for (Custom cd : clist) {
-            if (cd.getClass() == ImpinjRFPhaseAngle.class) {
-                epcString += " ImpinjPhase: " +
-                        ((ImpinjRFPhaseAngle) cd).getPhaseAngle().toString();
-                currentRfPhase = ((ImpinjRFPhaseAngle) cd).getPhaseAngle().toInteger();
-            }
-            if(cd.getClass() == ImpinjPeakRSSI.class) {
-                epcString += " ImpinjPeakRSSI: " +
-                        ((ImpinjPeakRSSI) cd).getRSSI().toString();
-                currentPeakRSSI =  ((ImpinjPeakRSSI) cd).getRSSI().toInteger();
-            }
-
-        }
-
-        epcString += calculateVelocity();
-        System.out.println(epcString);
-        phaseCount += 1;
-        System.out.println("----count ---------" + phaseCount);
-        
-        try {
-        	csvWriter.writeRecord((String[]) Arrays.asList("" +currentReadTime,"" + ename,""+currentChannelIndex,"" + currentRfPhase,""+currentPeakRSSI).toArray(new String[0]));
-        } catch (Exception e) {
-        	e.printStackTrace();
-        } finally {
-          //csvWriter.close()
-        }
-
-        // System.out.println(epcString);
-        //logger.debug(output);
-
-
-    }
-
-    String calculateVelocity()
-    {
-        String out = " Velocity: Unknown";
-        double velocity = 0;
-
-        /* you have to have two samples from the same EPC on the same
-         * antenna and channel.  NOTE: this is just a simple example.
-         * More sophisticated apps would create a database with
-         * this information per-EPC */
-        if ((lastEPCData != null) &&
-            (lastEPCData.equals(currentEPCData)) &&
-            (lastAntennaID.equals(currentAntennaID)) &&
-            (lastChannelIndex.equals(currentChannelIndex)) &&
-            (lastReadTime.toLong() < currentReadTime.toLong()))
-        {
-            /* positive velocity is moving towards the antenna */
-            double phaseChangeDegrees = (((double) currentRfPhase - (double) lastRfPhase)*360.0)/4096.0;
-            double timeChangeUsec = (currentReadTime.intValue() - lastReadTime.intValue());
-
-            /* always wrap the phase to between -180 and 180 */
-            while( phaseChangeDegrees < -180)
-                phaseChangeDegrees += 360;
-            while( phaseChangeDegrees > 180)
-                phaseChangeDegrees -= 360;
-
-            /* if our phase changes close to 180 degrees, you can see we
-            ** have an ambiguity of whether the phase advanced or retarded by
-            ** 180 degrees (or slightly over). There is no way to tell unless
-            ** you use more advanced techiques with multiple channels.  So just
-            ** ignore any samples where phase change is > 90 */
-            if (Math.abs((int)phaseChangeDegrees) <= 90)
-            {
-                /* We can divide these two to get degrees/usec, but it would be more
-                ** convenient to have this in a common unit like meters/second.
-                ** Here's a straightforward conversion.  NOTE: to be exact here, we
-                ** should use the channel index to find the channel frequency/wavelength.
-                ** For now, I'll just assume the wavelength corresponds to mid-band at
-                ** 0.32786885245901635 meters. The formula below eports meters per second.
-                ** Note that 360 degrees equals only 1/2 a wavelength of motion because
-                ** we are computing the round trip phase change.
-                **
-                **  phaseChange (degrees)   1/2 wavelength     0.327 meter      1000000 usec
-                **  --------------------- * -------------- * ---------------- * ------------
-                **  timeChange (usec)       360 degrees       1  wavelength      1 second
-                **
-                ** which should net out to estimated tag velocity in meters/second */
-
-                velocity = ((phaseChangeDegrees * 0.5 * 0.327868852 * 1000000) / (360 * timeChangeUsec));
-
-                out = " VelocityEstimate: " +
-                        velocity;
-            }
-        }
-
-        // save the current sample as the alst sample
-        lastReadTime = currentReadTime;
-        lastEPCData = currentEPCData;
-        lastRfPhase = currentRfPhase;
-        lastAntennaID = currentAntennaID;
-        lastChannelIndex = currentChannelIndex;
-        return out;
-    }
-
-    // messageReceived method is called whenever a message is received
-    // asynchronously on the LLRP connection.
+    @Override
     public void messageReceived(LLRPMessage message) {
         // convert all messages received to LTK-XML representation
         // and print them to the console
 
-        logger.debug("Received " + message.getName() + " message asychronously");
+        // logger.debug("Received " + message.getName() + " message asychronously");
 
         if (message.getTypeNum() == RO_ACCESS_REPORT.TYPENUM) {
             RO_ACCESS_REPORT report = (RO_ACCESS_REPORT) message;
@@ -748,64 +717,23 @@ public class DocSample4 implements LLRPEndpoint {
         }
     }
 
-    public void errorOccured(String s) {
-        logger.error(s);
-    }
-    
     /**
-     * @param args
+     * 处理Custom信息
+     * @param cust
      */
-    public static void main(String[] args) {
-        BasicConfigurator.configure();
-        
-        //csvwriter
-        LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-        String filePath = "./examples/source/csv"; //CSV�ļ�·��
-        String fileName = "CSV_"+ df.format(localDateTime) +".csv";//CSV�ļ�����
-        File csvFile = null;
-        
-        try {
-        	csvFile = new File(filePath + File.separator + fileName);
-            File parent = csvFile.getParentFile();
-            if (parent != null && !parent.exists()) {
-                parent.mkdirs();
-            }
-			csvFile.createNewFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    protected void logOneCustom(Custom cust) {
 
-        // Only show root events from the base logger
-        Logger.getRootLogger().setLevel(Level.ERROR);
-        DocSample4 example = new DocSample4("./examples/source/csv/"+fileName );
-        
-        example.csvWriter = new CsvWriter(example.WRITE_CSV_FILE_PATH,',', Charset.forName("GBK"));
-        //DocSample4 example = new DocSample4();
-        logger.setLevel(Level.INFO);
-
-        if  (args.length < 1) {
-            System.out.print("Must pass reader hostname or IP as agument 1");
+        if(!cust.getVendorIdentifier().equals(25882)) {
+            logger.error("Non Impinj Extension Found in message");
+            return;
         }
+    }
 
-        example.connect(args[0]);
-        example.enableImpinjExtensions();
-        example.factoryDefault();
-        example.getReaderCapabilities();
-        example.getReaderConfiguration();
-        example.setReaderConfiguration();
-        example.addRoSpec(true);
-        example.enable();
-        example.start();
-        try {
-            Thread.sleep(60000);
-        } catch (InterruptedException ex) {
-            logger.error("Sleep Interrupted");
-        }
-        example.stop();
-        example.disconnect();
-        csvWriter.close();
-        System.exit(0);
+    /**
+     * 处理TagReportData信息
+     * @param tr
+     */
+    protected void logOneTagReport(TagReportData tr) {
+        // logger.info(tr.toString());
     }
 }

@@ -1,4 +1,4 @@
-package com.alkaid;
+package com.alkaid.Recorder;
 
 import java.io.File;
 import java.io.IOException;

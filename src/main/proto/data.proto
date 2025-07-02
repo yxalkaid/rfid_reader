@@ -3,11 +3,16 @@
 syntax = "proto3";
 
 message DataPoint {
-  int64 index = 1;          // 序号
-  double time = 2;          // 时间戳
-  map<int32, DataList> data = 3;  // 数据，key为int，value为数值列表
+  int64 index = 1;                    // 序号
+  double time = 2;                    // 毫秒级时间戳
+  repeated DataList data = 3;         // 二维数据列表
+  repeated MaskList mask = 4; // 可选的二维掩码列表
 }
 
 message DataList {
-  repeated double values = 1;  // 存储数值列表
+  repeated double values = 1;
+}
+
+message MaskList { 
+  repeated int32 values = 1;
 }

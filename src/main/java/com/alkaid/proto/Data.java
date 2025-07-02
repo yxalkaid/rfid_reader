@@ -42,24 +42,17 @@ public final class Data {
      * 二维数据列表
      * </pre>
      *
-     * <code>repeated .DataList data = 3;</code>
+     * <code>repeated double data = 3;</code>
+     * @return A list containing the data.
      */
-    java.util.List<Data.DataList> 
-        getDataList();
+    java.util.List<java.lang.Double> getDataList();
     /**
      * <pre>
      * 二维数据列表
      * </pre>
      *
-     * <code>repeated .DataList data = 3;</code>
-     */
-    Data.DataList getData(int index);
-    /**
-     * <pre>
-     * 二维数据列表
-     * </pre>
-     *
-     * <code>repeated .DataList data = 3;</code>
+     * <code>repeated double data = 3;</code>
+     * @return The count of data.
      */
     int getDataCount();
     /**
@@ -67,43 +60,28 @@ public final class Data {
      * 二维数据列表
      * </pre>
      *
-     * <code>repeated .DataList data = 3;</code>
+     * <code>repeated double data = 3;</code>
+     * @param index The index of the element to return.
+     * @return The data at the given index.
      */
-    java.util.List<? extends Data.DataListOrBuilder> 
-        getDataOrBuilderList();
-    /**
-     * <pre>
-     * 二维数据列表
-     * </pre>
-     *
-     * <code>repeated .DataList data = 3;</code>
-     */
-    Data.DataListOrBuilder getDataOrBuilder(
-        int index);
+    double getData(int index);
 
     /**
      * <pre>
      * 可选的二维掩码列表
      * </pre>
      *
-     * <code>repeated .MaskList mask = 4;</code>
+     * <code>repeated int32 mask = 4;</code>
+     * @return A list containing the mask.
      */
-    java.util.List<Data.MaskList> 
-        getMaskList();
+    java.util.List<java.lang.Integer> getMaskList();
     /**
      * <pre>
      * 可选的二维掩码列表
      * </pre>
      *
-     * <code>repeated .MaskList mask = 4;</code>
-     */
-    Data.MaskList getMask(int index);
-    /**
-     * <pre>
-     * 可选的二维掩码列表
-     * </pre>
-     *
-     * <code>repeated .MaskList mask = 4;</code>
+     * <code>repeated int32 mask = 4;</code>
+     * @return The count of mask.
      */
     int getMaskCount();
     /**
@@ -111,19 +89,31 @@ public final class Data {
      * 可选的二维掩码列表
      * </pre>
      *
-     * <code>repeated .MaskList mask = 4;</code>
+     * <code>repeated int32 mask = 4;</code>
+     * @param index The index of the element to return.
+     * @return The mask at the given index.
      */
-    java.util.List<? extends Data.MaskListOrBuilder> 
-        getMaskOrBuilderList();
+    int getMask(int index);
+
     /**
      * <pre>
-     * 可选的二维掩码列表
+     * 通道数
      * </pre>
      *
-     * <code>repeated .MaskList mask = 4;</code>
+     * <code>int32 C_SIZE = 5;</code>
+     * @return The cSIZE.
      */
-    Data.MaskListOrBuilder getMaskOrBuilder(
-        int index);
+    int getCSIZE();
+
+    /**
+     * <pre>
+     * 每通道特征数
+     * </pre>
+     *
+     * <code>int32 X_SIZE = 6;</code>
+     * @return The xSIZE.
+     */
+    int getXSIZE();
   }
   /**
    * Protobuf type {@code DataPoint}
@@ -138,8 +128,8 @@ public final class Data {
       super(builder);
     }
     private DataPoint() {
-      data_ = java.util.Collections.emptyList();
-      mask_ = java.util.Collections.emptyList();
+      data_ = emptyDoubleList();
+      mask_ = emptyIntList();
     }
 
     @java.lang.Override
@@ -199,16 +189,18 @@ public final class Data {
 
     public static final int DATA_FIELD_NUMBER = 3;
     @SuppressWarnings("serial")
-    private java.util.List<Data.DataList> data_;
+    private com.google.protobuf.Internal.DoubleList data_;
     /**
      * <pre>
      * 二维数据列表
      * </pre>
      *
-     * <code>repeated .DataList data = 3;</code>
+     * <code>repeated double data = 3;</code>
+     * @return A list containing the data.
      */
     @java.lang.Override
-    public java.util.List<Data.DataList> getDataList() {
+    public java.util.List<java.lang.Double>
+        getDataList() {
       return data_;
     }
     /**
@@ -216,21 +208,9 @@ public final class Data {
      * 二维数据列表
      * </pre>
      *
-     * <code>repeated .DataList data = 3;</code>
+     * <code>repeated double data = 3;</code>
+     * @return The count of data.
      */
-    @java.lang.Override
-    public java.util.List<? extends Data.DataListOrBuilder> 
-        getDataOrBuilderList() {
-      return data_;
-    }
-    /**
-     * <pre>
-     * 二维数据列表
-     * </pre>
-     *
-     * <code>repeated .DataList data = 3;</code>
-     */
-    @java.lang.Override
     public int getDataCount() {
       return data_.size();
     }
@@ -239,37 +219,29 @@ public final class Data {
      * 二维数据列表
      * </pre>
      *
-     * <code>repeated .DataList data = 3;</code>
+     * <code>repeated double data = 3;</code>
+     * @param index The index of the element to return.
+     * @return The data at the given index.
      */
-    @java.lang.Override
-    public Data.DataList getData(int index) {
-      return data_.get(index);
+    public double getData(int index) {
+      return data_.getDouble(index);
     }
-    /**
-     * <pre>
-     * 二维数据列表
-     * </pre>
-     *
-     * <code>repeated .DataList data = 3;</code>
-     */
-    @java.lang.Override
-    public Data.DataListOrBuilder getDataOrBuilder(
-        int index) {
-      return data_.get(index);
-    }
+    private int dataMemoizedSerializedSize = -1;
 
     public static final int MASK_FIELD_NUMBER = 4;
     @SuppressWarnings("serial")
-    private java.util.List<Data.MaskList> mask_;
+    private com.google.protobuf.Internal.IntList mask_;
     /**
      * <pre>
      * 可选的二维掩码列表
      * </pre>
      *
-     * <code>repeated .MaskList mask = 4;</code>
+     * <code>repeated int32 mask = 4;</code>
+     * @return A list containing the mask.
      */
     @java.lang.Override
-    public java.util.List<Data.MaskList> getMaskList() {
+    public java.util.List<java.lang.Integer>
+        getMaskList() {
       return mask_;
     }
     /**
@@ -277,21 +249,9 @@ public final class Data {
      * 可选的二维掩码列表
      * </pre>
      *
-     * <code>repeated .MaskList mask = 4;</code>
+     * <code>repeated int32 mask = 4;</code>
+     * @return The count of mask.
      */
-    @java.lang.Override
-    public java.util.List<? extends Data.MaskListOrBuilder> 
-        getMaskOrBuilderList() {
-      return mask_;
-    }
-    /**
-     * <pre>
-     * 可选的二维掩码列表
-     * </pre>
-     *
-     * <code>repeated .MaskList mask = 4;</code>
-     */
-    @java.lang.Override
     public int getMaskCount() {
       return mask_.size();
     }
@@ -300,23 +260,43 @@ public final class Data {
      * 可选的二维掩码列表
      * </pre>
      *
-     * <code>repeated .MaskList mask = 4;</code>
+     * <code>repeated int32 mask = 4;</code>
+     * @param index The index of the element to return.
+     * @return The mask at the given index.
      */
-    @java.lang.Override
-    public Data.MaskList getMask(int index) {
-      return mask_.get(index);
+    public int getMask(int index) {
+      return mask_.getInt(index);
     }
+    private int maskMemoizedSerializedSize = -1;
+
+    public static final int C_SIZE_FIELD_NUMBER = 5;
+    private int cSIZE_ = 0;
     /**
      * <pre>
-     * 可选的二维掩码列表
+     * 通道数
      * </pre>
      *
-     * <code>repeated .MaskList mask = 4;</code>
+     * <code>int32 C_SIZE = 5;</code>
+     * @return The cSIZE.
      */
     @java.lang.Override
-    public Data.MaskListOrBuilder getMaskOrBuilder(
-        int index) {
-      return mask_.get(index);
+    public int getCSIZE() {
+      return cSIZE_;
+    }
+
+    public static final int X_SIZE_FIELD_NUMBER = 6;
+    private int xSIZE_ = 0;
+    /**
+     * <pre>
+     * 每通道特征数
+     * </pre>
+     *
+     * <code>int32 X_SIZE = 6;</code>
+     * @return The xSIZE.
+     */
+    @java.lang.Override
+    public int getXSIZE() {
+      return xSIZE_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -333,17 +313,32 @@ public final class Data {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       if (index_ != 0L) {
         output.writeInt64(1, index_);
       }
       if (java.lang.Double.doubleToRawLongBits(time_) != 0) {
         output.writeDouble(2, time_);
       }
+      if (getDataList().size() > 0) {
+        output.writeUInt32NoTag(26);
+        output.writeUInt32NoTag(dataMemoizedSerializedSize);
+      }
       for (int i = 0; i < data_.size(); i++) {
-        output.writeMessage(3, data_.get(i));
+        output.writeDoubleNoTag(data_.getDouble(i));
+      }
+      if (getMaskList().size() > 0) {
+        output.writeUInt32NoTag(34);
+        output.writeUInt32NoTag(maskMemoizedSerializedSize);
       }
       for (int i = 0; i < mask_.size(); i++) {
-        output.writeMessage(4, mask_.get(i));
+        output.writeInt32NoTag(mask_.getInt(i));
+      }
+      if (cSIZE_ != 0) {
+        output.writeInt32(5, cSIZE_);
+      }
+      if (xSIZE_ != 0) {
+        output.writeInt32(6, xSIZE_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -362,13 +357,38 @@ public final class Data {
         size += com.google.protobuf.CodedOutputStream
           .computeDoubleSize(2, time_);
       }
-      for (int i = 0; i < data_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, data_.get(i));
+      {
+        int dataSize = 0;
+        dataSize = 8 * getDataList().size();
+        size += dataSize;
+        if (!getDataList().isEmpty()) {
+          size += 1;
+          size += com.google.protobuf.CodedOutputStream
+              .computeInt32SizeNoTag(dataSize);
+        }
+        dataMemoizedSerializedSize = dataSize;
       }
-      for (int i = 0; i < mask_.size(); i++) {
+      {
+        int dataSize = 0;
+        for (int i = 0; i < mask_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(mask_.getInt(i));
+        }
+        size += dataSize;
+        if (!getMaskList().isEmpty()) {
+          size += 1;
+          size += com.google.protobuf.CodedOutputStream
+              .computeInt32SizeNoTag(dataSize);
+        }
+        maskMemoizedSerializedSize = dataSize;
+      }
+      if (cSIZE_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, mask_.get(i));
+          .computeInt32Size(5, cSIZE_);
+      }
+      if (xSIZE_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, xSIZE_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -394,6 +414,10 @@ public final class Data {
           .equals(other.getDataList())) return false;
       if (!getMaskList()
           .equals(other.getMaskList())) return false;
+      if (getCSIZE()
+          != other.getCSIZE()) return false;
+      if (getXSIZE()
+          != other.getXSIZE()) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -419,6 +443,10 @@ public final class Data {
         hash = (37 * hash) + MASK_FIELD_NUMBER;
         hash = (53 * hash) + getMaskList().hashCode();
       }
+      hash = (37 * hash) + C_SIZE_FIELD_NUMBER;
+      hash = (53 * hash) + getCSIZE();
+      hash = (37 * hash) + X_SIZE_FIELD_NUMBER;
+      hash = (53 * hash) + getXSIZE();
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -550,20 +578,10 @@ public final class Data {
         bitField0_ = 0;
         index_ = 0L;
         time_ = 0D;
-        if (dataBuilder_ == null) {
-          data_ = java.util.Collections.emptyList();
-        } else {
-          data_ = null;
-          dataBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000004);
-        if (maskBuilder_ == null) {
-          mask_ = java.util.Collections.emptyList();
-        } else {
-          mask_ = null;
-          maskBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        data_ = emptyDoubleList();
+        mask_ = emptyIntList();
+        cSIZE_ = 0;
+        xSIZE_ = 0;
         return this;
       }
 
@@ -597,24 +615,16 @@ public final class Data {
       }
 
       private void buildPartialRepeatedFields(Data.DataPoint result) {
-        if (dataBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) != 0)) {
-            data_ = java.util.Collections.unmodifiableList(data_);
-            bitField0_ = (bitField0_ & ~0x00000004);
-          }
-          result.data_ = data_;
-        } else {
-          result.data_ = dataBuilder_.build();
+        if (((bitField0_ & 0x00000004) != 0)) {
+          data_.makeImmutable();
+          bitField0_ = (bitField0_ & ~0x00000004);
         }
-        if (maskBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) != 0)) {
-            mask_ = java.util.Collections.unmodifiableList(mask_);
-            bitField0_ = (bitField0_ & ~0x00000008);
-          }
-          result.mask_ = mask_;
-        } else {
-          result.mask_ = maskBuilder_.build();
+        result.data_ = data_;
+        if (((bitField0_ & 0x00000008) != 0)) {
+          mask_.makeImmutable();
+          bitField0_ = (bitField0_ & ~0x00000008);
         }
+        result.mask_ = mask_;
       }
 
       private void buildPartial0(Data.DataPoint result) {
@@ -624,6 +634,12 @@ public final class Data {
         }
         if (((from_bitField0_ & 0x00000002) != 0)) {
           result.time_ = time_;
+        }
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          result.cSIZE_ = cSIZE_;
+        }
+        if (((from_bitField0_ & 0x00000020) != 0)) {
+          result.xSIZE_ = xSIZE_;
         }
       }
 
@@ -677,57 +693,31 @@ public final class Data {
         if (other.getTime() != 0D) {
           setTime(other.getTime());
         }
-        if (dataBuilder_ == null) {
-          if (!other.data_.isEmpty()) {
-            if (data_.isEmpty()) {
-              data_ = other.data_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-            } else {
-              ensureDataIsMutable();
-              data_.addAll(other.data_);
-            }
-            onChanged();
+        if (!other.data_.isEmpty()) {
+          if (data_.isEmpty()) {
+            data_ = other.data_;
+            bitField0_ = (bitField0_ & ~0x00000004);
+          } else {
+            ensureDataIsMutable();
+            data_.addAll(other.data_);
           }
-        } else {
-          if (!other.data_.isEmpty()) {
-            if (dataBuilder_.isEmpty()) {
-              dataBuilder_.dispose();
-              dataBuilder_ = null;
-              data_ = other.data_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-              dataBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getDataFieldBuilder() : null;
-            } else {
-              dataBuilder_.addAllMessages(other.data_);
-            }
-          }
+          onChanged();
         }
-        if (maskBuilder_ == null) {
-          if (!other.mask_.isEmpty()) {
-            if (mask_.isEmpty()) {
-              mask_ = other.mask_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-            } else {
-              ensureMaskIsMutable();
-              mask_.addAll(other.mask_);
-            }
-            onChanged();
+        if (!other.mask_.isEmpty()) {
+          if (mask_.isEmpty()) {
+            mask_ = other.mask_;
+            bitField0_ = (bitField0_ & ~0x00000008);
+          } else {
+            ensureMaskIsMutable();
+            mask_.addAll(other.mask_);
           }
-        } else {
-          if (!other.mask_.isEmpty()) {
-            if (maskBuilder_.isEmpty()) {
-              maskBuilder_.dispose();
-              maskBuilder_ = null;
-              mask_ = other.mask_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-              maskBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getMaskFieldBuilder() : null;
-            } else {
-              maskBuilder_.addAllMessages(other.mask_);
-            }
-          }
+          onChanged();
+        }
+        if (other.getCSIZE() != 0) {
+          setCSIZE(other.getCSIZE());
+        }
+        if (other.getXSIZE() != 0) {
+          setXSIZE(other.getXSIZE());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
@@ -765,32 +755,48 @@ public final class Data {
                 bitField0_ |= 0x00000002;
                 break;
               } // case 17
+              case 25: {
+                double v = input.readDouble();
+                ensureDataIsMutable();
+                data_.addDouble(v);
+                break;
+              } // case 25
               case 26: {
-                Data.DataList m =
-                    input.readMessage(
-                        Data.DataList.parser(),
-                        extensionRegistry);
-                if (dataBuilder_ == null) {
-                  ensureDataIsMutable();
-                  data_.add(m);
-                } else {
-                  dataBuilder_.addMessage(m);
+                int length = input.readRawVarint32();
+                int limit = input.pushLimit(length);
+                ensureDataIsMutable();
+                while (input.getBytesUntilLimit() > 0) {
+                  data_.addDouble(input.readDouble());
                 }
+                input.popLimit(limit);
                 break;
               } // case 26
+              case 32: {
+                int v = input.readInt32();
+                ensureMaskIsMutable();
+                mask_.addInt(v);
+                break;
+              } // case 32
               case 34: {
-                Data.MaskList m =
-                    input.readMessage(
-                        Data.MaskList.parser(),
-                        extensionRegistry);
-                if (maskBuilder_ == null) {
-                  ensureMaskIsMutable();
-                  mask_.add(m);
-                } else {
-                  maskBuilder_.addMessage(m);
+                int length = input.readRawVarint32();
+                int limit = input.pushLimit(length);
+                ensureMaskIsMutable();
+                while (input.getBytesUntilLimit() > 0) {
+                  mask_.addInt(input.readInt32());
                 }
+                input.popLimit(limit);
                 break;
               } // case 34
+              case 40: {
+                cSIZE_ = input.readInt32();
+                bitField0_ |= 0x00000010;
+                break;
+              } // case 40
+              case 48: {
+                xSIZE_ = input.readInt32();
+                bitField0_ |= 0x00000020;
+                break;
+              } // case 48
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -896,30 +902,11 @@ public final class Data {
         return this;
       }
 
-      private java.util.List<Data.DataList> data_ =
-        java.util.Collections.emptyList();
+      private com.google.protobuf.Internal.DoubleList data_ = emptyDoubleList();
       private void ensureDataIsMutable() {
         if (!((bitField0_ & 0x00000004) != 0)) {
-          data_ = new java.util.ArrayList<Data.DataList>(data_);
+          data_ = mutableCopy(data_);
           bitField0_ |= 0x00000004;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          Data.DataList, Data.DataList.Builder, Data.DataListOrBuilder> dataBuilder_;
-
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public java.util.List<Data.DataList> getDataList() {
-        if (dataBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(data_);
-        } else {
-          return dataBuilder_.getMessageList();
         }
       }
       /**
@@ -927,48 +914,53 @@ public final class Data {
        * 二维数据列表
        * </pre>
        *
-       * <code>repeated .DataList data = 3;</code>
+       * <code>repeated double data = 3;</code>
+       * @return A list containing the data.
+       */
+      public java.util.List<java.lang.Double>
+          getDataList() {
+        return ((bitField0_ & 0x00000004) != 0) ?
+                 java.util.Collections.unmodifiableList(data_) : data_;
+      }
+      /**
+       * <pre>
+       * 二维数据列表
+       * </pre>
+       *
+       * <code>repeated double data = 3;</code>
+       * @return The count of data.
        */
       public int getDataCount() {
-        if (dataBuilder_ == null) {
-          return data_.size();
-        } else {
-          return dataBuilder_.getCount();
-        }
+        return data_.size();
       }
       /**
        * <pre>
        * 二维数据列表
        * </pre>
        *
-       * <code>repeated .DataList data = 3;</code>
+       * <code>repeated double data = 3;</code>
+       * @param index The index of the element to return.
+       * @return The data at the given index.
        */
-      public Data.DataList getData(int index) {
-        if (dataBuilder_ == null) {
-          return data_.get(index);
-        } else {
-          return dataBuilder_.getMessage(index);
-        }
+      public double getData(int index) {
+        return data_.getDouble(index);
       }
       /**
        * <pre>
        * 二维数据列表
        * </pre>
        *
-       * <code>repeated .DataList data = 3;</code>
+       * <code>repeated double data = 3;</code>
+       * @param index The index to set the value at.
+       * @param value The data to set.
+       * @return This builder for chaining.
        */
       public Builder setData(
-          int index, Data.DataList value) {
-        if (dataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureDataIsMutable();
-          data_.set(index, value);
-          onChanged();
-        } else {
-          dataBuilder_.setMessage(index, value);
-        }
+          int index, double value) {
+        
+        ensureDataIsMutable();
+        data_.setDouble(index, value);
+        onChanged();
         return this;
       }
       /**
@@ -976,17 +968,15 @@ public final class Data {
        * 二维数据列表
        * </pre>
        *
-       * <code>repeated .DataList data = 3;</code>
+       * <code>repeated double data = 3;</code>
+       * @param value The data to add.
+       * @return This builder for chaining.
        */
-      public Builder setData(
-          int index, Data.DataList.Builder builderForValue) {
-        if (dataBuilder_ == null) {
-          ensureDataIsMutable();
-          data_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          dataBuilder_.setMessage(index, builderForValue.build());
-        }
+      public Builder addData(double value) {
+        
+        ensureDataIsMutable();
+        data_.addDouble(value);
+        onChanged();
         return this;
       }
       /**
@@ -994,95 +984,16 @@ public final class Data {
        * 二维数据列表
        * </pre>
        *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public Builder addData(Data.DataList value) {
-        if (dataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureDataIsMutable();
-          data_.add(value);
-          onChanged();
-        } else {
-          dataBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public Builder addData(
-          int index, Data.DataList value) {
-        if (dataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureDataIsMutable();
-          data_.add(index, value);
-          onChanged();
-        } else {
-          dataBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public Builder addData(
-          Data.DataList.Builder builderForValue) {
-        if (dataBuilder_ == null) {
-          ensureDataIsMutable();
-          data_.add(builderForValue.build());
-          onChanged();
-        } else {
-          dataBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public Builder addData(
-          int index, Data.DataList.Builder builderForValue) {
-        if (dataBuilder_ == null) {
-          ensureDataIsMutable();
-          data_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          dataBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
+       * <code>repeated double data = 3;</code>
+       * @param values The data to add.
+       * @return This builder for chaining.
        */
       public Builder addAllData(
-          java.lang.Iterable<? extends Data.DataList> values) {
-        if (dataBuilder_ == null) {
-          ensureDataIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, data_);
-          onChanged();
-        } else {
-          dataBuilder_.addAllMessages(values);
-        }
+          java.lang.Iterable<? extends java.lang.Double> values) {
+        ensureDataIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, data_);
+        onChanged();
         return this;
       }
       /**
@@ -1090,148 +1001,21 @@ public final class Data {
        * 二维数据列表
        * </pre>
        *
-       * <code>repeated .DataList data = 3;</code>
+       * <code>repeated double data = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearData() {
-        if (dataBuilder_ == null) {
-          data_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
-          onChanged();
-        } else {
-          dataBuilder_.clear();
-        }
+        data_ = emptyDoubleList();
+        bitField0_ = (bitField0_ & ~0x00000004);
+        onChanged();
         return this;
-      }
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public Builder removeData(int index) {
-        if (dataBuilder_ == null) {
-          ensureDataIsMutable();
-          data_.remove(index);
-          onChanged();
-        } else {
-          dataBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public Data.DataList.Builder getDataBuilder(
-          int index) {
-        return getDataFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public Data.DataListOrBuilder getDataOrBuilder(
-          int index) {
-        if (dataBuilder_ == null) {
-          return data_.get(index);  } else {
-          return dataBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public java.util.List<? extends Data.DataListOrBuilder> 
-           getDataOrBuilderList() {
-        if (dataBuilder_ != null) {
-          return dataBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(data_);
-        }
-      }
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public Data.DataList.Builder addDataBuilder() {
-        return getDataFieldBuilder().addBuilder(
-            Data.DataList.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public Data.DataList.Builder addDataBuilder(
-          int index) {
-        return getDataFieldBuilder().addBuilder(
-            index, Data.DataList.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * 二维数据列表
-       * </pre>
-       *
-       * <code>repeated .DataList data = 3;</code>
-       */
-      public java.util.List<Data.DataList.Builder> 
-           getDataBuilderList() {
-        return getDataFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          Data.DataList, Data.DataList.Builder, Data.DataListOrBuilder> 
-          getDataFieldBuilder() {
-        if (dataBuilder_ == null) {
-          dataBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              Data.DataList, Data.DataList.Builder, Data.DataListOrBuilder>(
-                  data_,
-                  ((bitField0_ & 0x00000004) != 0),
-                  getParentForChildren(),
-                  isClean());
-          data_ = null;
-        }
-        return dataBuilder_;
       }
 
-      private java.util.List<Data.MaskList> mask_ =
-        java.util.Collections.emptyList();
+      private com.google.protobuf.Internal.IntList mask_ = emptyIntList();
       private void ensureMaskIsMutable() {
         if (!((bitField0_ & 0x00000008) != 0)) {
-          mask_ = new java.util.ArrayList<Data.MaskList>(mask_);
+          mask_ = mutableCopy(mask_);
           bitField0_ |= 0x00000008;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          Data.MaskList, Data.MaskList.Builder, Data.MaskListOrBuilder> maskBuilder_;
-
-      /**
-       * <pre>
-       * 可选的二维掩码列表
-       * </pre>
-       *
-       * <code>repeated .MaskList mask = 4;</code>
-       */
-      public java.util.List<Data.MaskList> getMaskList() {
-        if (maskBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(mask_);
-        } else {
-          return maskBuilder_.getMessageList();
         }
       }
       /**
@@ -1239,48 +1023,53 @@ public final class Data {
        * 可选的二维掩码列表
        * </pre>
        *
-       * <code>repeated .MaskList mask = 4;</code>
+       * <code>repeated int32 mask = 4;</code>
+       * @return A list containing the mask.
+       */
+      public java.util.List<java.lang.Integer>
+          getMaskList() {
+        return ((bitField0_ & 0x00000008) != 0) ?
+                 java.util.Collections.unmodifiableList(mask_) : mask_;
+      }
+      /**
+       * <pre>
+       * 可选的二维掩码列表
+       * </pre>
+       *
+       * <code>repeated int32 mask = 4;</code>
+       * @return The count of mask.
        */
       public int getMaskCount() {
-        if (maskBuilder_ == null) {
-          return mask_.size();
-        } else {
-          return maskBuilder_.getCount();
-        }
+        return mask_.size();
       }
       /**
        * <pre>
        * 可选的二维掩码列表
        * </pre>
        *
-       * <code>repeated .MaskList mask = 4;</code>
+       * <code>repeated int32 mask = 4;</code>
+       * @param index The index of the element to return.
+       * @return The mask at the given index.
        */
-      public Data.MaskList getMask(int index) {
-        if (maskBuilder_ == null) {
-          return mask_.get(index);
-        } else {
-          return maskBuilder_.getMessage(index);
-        }
+      public int getMask(int index) {
+        return mask_.getInt(index);
       }
       /**
        * <pre>
        * 可选的二维掩码列表
        * </pre>
        *
-       * <code>repeated .MaskList mask = 4;</code>
+       * <code>repeated int32 mask = 4;</code>
+       * @param index The index to set the value at.
+       * @param value The mask to set.
+       * @return This builder for chaining.
        */
       public Builder setMask(
-          int index, Data.MaskList value) {
-        if (maskBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureMaskIsMutable();
-          mask_.set(index, value);
-          onChanged();
-        } else {
-          maskBuilder_.setMessage(index, value);
-        }
+          int index, int value) {
+        
+        ensureMaskIsMutable();
+        mask_.setInt(index, value);
+        onChanged();
         return this;
       }
       /**
@@ -1288,17 +1077,15 @@ public final class Data {
        * 可选的二维掩码列表
        * </pre>
        *
-       * <code>repeated .MaskList mask = 4;</code>
+       * <code>repeated int32 mask = 4;</code>
+       * @param value The mask to add.
+       * @return This builder for chaining.
        */
-      public Builder setMask(
-          int index, Data.MaskList.Builder builderForValue) {
-        if (maskBuilder_ == null) {
-          ensureMaskIsMutable();
-          mask_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          maskBuilder_.setMessage(index, builderForValue.build());
-        }
+      public Builder addMask(int value) {
+        
+        ensureMaskIsMutable();
+        mask_.addInt(value);
+        onChanged();
         return this;
       }
       /**
@@ -1306,95 +1093,16 @@ public final class Data {
        * 可选的二维掩码列表
        * </pre>
        *
-       * <code>repeated .MaskList mask = 4;</code>
-       */
-      public Builder addMask(Data.MaskList value) {
-        if (maskBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureMaskIsMutable();
-          mask_.add(value);
-          onChanged();
-        } else {
-          maskBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * 可选的二维掩码列表
-       * </pre>
-       *
-       * <code>repeated .MaskList mask = 4;</code>
-       */
-      public Builder addMask(
-          int index, Data.MaskList value) {
-        if (maskBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureMaskIsMutable();
-          mask_.add(index, value);
-          onChanged();
-        } else {
-          maskBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * 可选的二维掩码列表
-       * </pre>
-       *
-       * <code>repeated .MaskList mask = 4;</code>
-       */
-      public Builder addMask(
-          Data.MaskList.Builder builderForValue) {
-        if (maskBuilder_ == null) {
-          ensureMaskIsMutable();
-          mask_.add(builderForValue.build());
-          onChanged();
-        } else {
-          maskBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * 可选的二维掩码列表
-       * </pre>
-       *
-       * <code>repeated .MaskList mask = 4;</code>
-       */
-      public Builder addMask(
-          int index, Data.MaskList.Builder builderForValue) {
-        if (maskBuilder_ == null) {
-          ensureMaskIsMutable();
-          mask_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          maskBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * 可选的二维掩码列表
-       * </pre>
-       *
-       * <code>repeated .MaskList mask = 4;</code>
+       * <code>repeated int32 mask = 4;</code>
+       * @param values The mask to add.
+       * @return This builder for chaining.
        */
       public Builder addAllMask(
-          java.lang.Iterable<? extends Data.MaskList> values) {
-        if (maskBuilder_ == null) {
-          ensureMaskIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, mask_);
-          onChanged();
-        } else {
-          maskBuilder_.addAllMessages(values);
-        }
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureMaskIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, mask_);
+        onChanged();
         return this;
       }
       /**
@@ -1402,122 +1110,102 @@ public final class Data {
        * 可选的二维掩码列表
        * </pre>
        *
-       * <code>repeated .MaskList mask = 4;</code>
+       * <code>repeated int32 mask = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearMask() {
-        if (maskBuilder_ == null) {
-          mask_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
-          onChanged();
-        } else {
-          maskBuilder_.clear();
-        }
+        mask_ = emptyIntList();
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+
+      private int cSIZE_ ;
+      /**
+       * <pre>
+       * 通道数
+       * </pre>
+       *
+       * <code>int32 C_SIZE = 5;</code>
+       * @return The cSIZE.
+       */
+      @java.lang.Override
+      public int getCSIZE() {
+        return cSIZE_;
+      }
+      /**
+       * <pre>
+       * 通道数
+       * </pre>
+       *
+       * <code>int32 C_SIZE = 5;</code>
+       * @param value The cSIZE to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCSIZE(int value) {
+        
+        cSIZE_ = value;
+        bitField0_ |= 0x00000010;
+        onChanged();
         return this;
       }
       /**
        * <pre>
-       * 可选的二维掩码列表
+       * 通道数
        * </pre>
        *
-       * <code>repeated .MaskList mask = 4;</code>
+       * <code>int32 C_SIZE = 5;</code>
+       * @return This builder for chaining.
        */
-      public Builder removeMask(int index) {
-        if (maskBuilder_ == null) {
-          ensureMaskIsMutable();
-          mask_.remove(index);
-          onChanged();
-        } else {
-          maskBuilder_.remove(index);
-        }
+      public Builder clearCSIZE() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        cSIZE_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int xSIZE_ ;
+      /**
+       * <pre>
+       * 每通道特征数
+       * </pre>
+       *
+       * <code>int32 X_SIZE = 6;</code>
+       * @return The xSIZE.
+       */
+      @java.lang.Override
+      public int getXSIZE() {
+        return xSIZE_;
+      }
+      /**
+       * <pre>
+       * 每通道特征数
+       * </pre>
+       *
+       * <code>int32 X_SIZE = 6;</code>
+       * @param value The xSIZE to set.
+       * @return This builder for chaining.
+       */
+      public Builder setXSIZE(int value) {
+        
+        xSIZE_ = value;
+        bitField0_ |= 0x00000020;
+        onChanged();
         return this;
       }
       /**
        * <pre>
-       * 可选的二维掩码列表
+       * 每通道特征数
        * </pre>
        *
-       * <code>repeated .MaskList mask = 4;</code>
+       * <code>int32 X_SIZE = 6;</code>
+       * @return This builder for chaining.
        */
-      public Data.MaskList.Builder getMaskBuilder(
-          int index) {
-        return getMaskFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <pre>
-       * 可选的二维掩码列表
-       * </pre>
-       *
-       * <code>repeated .MaskList mask = 4;</code>
-       */
-      public Data.MaskListOrBuilder getMaskOrBuilder(
-          int index) {
-        if (maskBuilder_ == null) {
-          return mask_.get(index);  } else {
-          return maskBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <pre>
-       * 可选的二维掩码列表
-       * </pre>
-       *
-       * <code>repeated .MaskList mask = 4;</code>
-       */
-      public java.util.List<? extends Data.MaskListOrBuilder> 
-           getMaskOrBuilderList() {
-        if (maskBuilder_ != null) {
-          return maskBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(mask_);
-        }
-      }
-      /**
-       * <pre>
-       * 可选的二维掩码列表
-       * </pre>
-       *
-       * <code>repeated .MaskList mask = 4;</code>
-       */
-      public Data.MaskList.Builder addMaskBuilder() {
-        return getMaskFieldBuilder().addBuilder(
-            Data.MaskList.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * 可选的二维掩码列表
-       * </pre>
-       *
-       * <code>repeated .MaskList mask = 4;</code>
-       */
-      public Data.MaskList.Builder addMaskBuilder(
-          int index) {
-        return getMaskFieldBuilder().addBuilder(
-            index, Data.MaskList.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * 可选的二维掩码列表
-       * </pre>
-       *
-       * <code>repeated .MaskList mask = 4;</code>
-       */
-      public java.util.List<Data.MaskList.Builder> 
-           getMaskBuilderList() {
-        return getMaskFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          Data.MaskList, Data.MaskList.Builder, Data.MaskListOrBuilder> 
-          getMaskFieldBuilder() {
-        if (maskBuilder_ == null) {
-          maskBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              Data.MaskList, Data.MaskList.Builder, Data.MaskListOrBuilder>(
-                  mask_,
-                  ((bitField0_ & 0x00000008) != 0),
-                  getParentForChildren(),
-                  isClean());
-          mask_ = null;
-        }
-        return maskBuilder_;
+      public Builder clearXSIZE() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        xSIZE_ = 0;
+        onChanged();
+        return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -1583,1216 +1271,11 @@ public final class Data {
 
   }
 
-  public interface DataListOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:DataList)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>repeated double values = 1;</code>
-     * @return A list containing the values.
-     */
-    java.util.List<java.lang.Double> getValuesList();
-    /**
-     * <code>repeated double values = 1;</code>
-     * @return The count of values.
-     */
-    int getValuesCount();
-    /**
-     * <code>repeated double values = 1;</code>
-     * @param index The index of the element to return.
-     * @return The values at the given index.
-     */
-    double getValues(int index);
-  }
-  /**
-   * Protobuf type {@code DataList}
-   */
-  public static final class DataList extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:DataList)
-      DataListOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use DataList.newBuilder() to construct.
-    private DataList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private DataList() {
-      values_ = emptyDoubleList();
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new DataList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return Data.internal_static_DataList_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return Data.internal_static_DataList_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              Data.DataList.class, Data.DataList.Builder.class);
-    }
-
-    public static final int VALUES_FIELD_NUMBER = 1;
-    @SuppressWarnings("serial")
-    private com.google.protobuf.Internal.DoubleList values_;
-    /**
-     * <code>repeated double values = 1;</code>
-     * @return A list containing the values.
-     */
-    @java.lang.Override
-    public java.util.List<java.lang.Double>
-        getValuesList() {
-      return values_;
-    }
-    /**
-     * <code>repeated double values = 1;</code>
-     * @return The count of values.
-     */
-    public int getValuesCount() {
-      return values_.size();
-    }
-    /**
-     * <code>repeated double values = 1;</code>
-     * @param index The index of the element to return.
-     * @return The values at the given index.
-     */
-    public double getValues(int index) {
-      return values_.getDouble(index);
-    }
-    private int valuesMemoizedSerializedSize = -1;
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (getValuesList().size() > 0) {
-        output.writeUInt32NoTag(10);
-        output.writeUInt32NoTag(valuesMemoizedSerializedSize);
-      }
-      for (int i = 0; i < values_.size(); i++) {
-        output.writeDoubleNoTag(values_.getDouble(i));
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      {
-        int dataSize = 0;
-        dataSize = 8 * getValuesList().size();
-        size += dataSize;
-        if (!getValuesList().isEmpty()) {
-          size += 1;
-          size += com.google.protobuf.CodedOutputStream
-              .computeInt32SizeNoTag(dataSize);
-        }
-        valuesMemoizedSerializedSize = dataSize;
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof Data.DataList)) {
-        return super.equals(obj);
-      }
-      Data.DataList other = (Data.DataList) obj;
-
-      if (!getValuesList()
-          .equals(other.getValuesList())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (getValuesCount() > 0) {
-        hash = (37 * hash) + VALUES_FIELD_NUMBER;
-        hash = (53 * hash) + getValuesList().hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static Data.DataList parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Data.DataList parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Data.DataList parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Data.DataList parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Data.DataList parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Data.DataList parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Data.DataList parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static Data.DataList parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static Data.DataList parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static Data.DataList parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static Data.DataList parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static Data.DataList parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(Data.DataList prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code DataList}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:DataList)
-        Data.DataListOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return Data.internal_static_DataList_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return Data.internal_static_DataList_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                Data.DataList.class, Data.DataList.Builder.class);
-      }
-
-      // Construct using Data.DataList.newBuilder()
-      private Builder() {
-
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        values_ = emptyDoubleList();
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return Data.internal_static_DataList_descriptor;
-      }
-
-      @java.lang.Override
-      public Data.DataList getDefaultInstanceForType() {
-        return Data.DataList.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public Data.DataList build() {
-        Data.DataList result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public Data.DataList buildPartial() {
-        Data.DataList result = new Data.DataList(this);
-        buildPartialRepeatedFields(result);
-        if (bitField0_ != 0) { buildPartial0(result); }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartialRepeatedFields(Data.DataList result) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          values_.makeImmutable();
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.values_ = values_;
-      }
-
-      private void buildPartial0(Data.DataList result) {
-        int from_bitField0_ = bitField0_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof Data.DataList) {
-          return mergeFrom((Data.DataList)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(Data.DataList other) {
-        if (other == Data.DataList.getDefaultInstance()) return this;
-        if (!other.values_.isEmpty()) {
-          if (values_.isEmpty()) {
-            values_ = other.values_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureValuesIsMutable();
-            values_.addAll(other.values_);
-          }
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 9: {
-                double v = input.readDouble();
-                ensureValuesIsMutable();
-                values_.addDouble(v);
-                break;
-              } // case 9
-              case 10: {
-                int length = input.readRawVarint32();
-                int limit = input.pushLimit(length);
-                ensureValuesIsMutable();
-                while (input.getBytesUntilLimit() > 0) {
-                  values_.addDouble(input.readDouble());
-                }
-                input.popLimit(limit);
-                break;
-              } // case 10
-              default: {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-      private int bitField0_;
-
-      private com.google.protobuf.Internal.DoubleList values_ = emptyDoubleList();
-      private void ensureValuesIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
-          values_ = mutableCopy(values_);
-          bitField0_ |= 0x00000001;
-        }
-      }
-      /**
-       * <code>repeated double values = 1;</code>
-       * @return A list containing the values.
-       */
-      public java.util.List<java.lang.Double>
-          getValuesList() {
-        return ((bitField0_ & 0x00000001) != 0) ?
-                 java.util.Collections.unmodifiableList(values_) : values_;
-      }
-      /**
-       * <code>repeated double values = 1;</code>
-       * @return The count of values.
-       */
-      public int getValuesCount() {
-        return values_.size();
-      }
-      /**
-       * <code>repeated double values = 1;</code>
-       * @param index The index of the element to return.
-       * @return The values at the given index.
-       */
-      public double getValues(int index) {
-        return values_.getDouble(index);
-      }
-      /**
-       * <code>repeated double values = 1;</code>
-       * @param index The index to set the value at.
-       * @param value The values to set.
-       * @return This builder for chaining.
-       */
-      public Builder setValues(
-          int index, double value) {
-        
-        ensureValuesIsMutable();
-        values_.setDouble(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated double values = 1;</code>
-       * @param value The values to add.
-       * @return This builder for chaining.
-       */
-      public Builder addValues(double value) {
-        
-        ensureValuesIsMutable();
-        values_.addDouble(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated double values = 1;</code>
-       * @param values The values to add.
-       * @return This builder for chaining.
-       */
-      public Builder addAllValues(
-          java.lang.Iterable<? extends java.lang.Double> values) {
-        ensureValuesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, values_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated double values = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearValues() {
-        values_ = emptyDoubleList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:DataList)
-    }
-
-    // @@protoc_insertion_point(class_scope:DataList)
-    private static final Data.DataList DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new Data.DataList();
-    }
-
-    public static Data.DataList getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<DataList>
-        PARSER = new com.google.protobuf.AbstractParser<DataList>() {
-      @java.lang.Override
-      public DataList parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        Builder builder = newBuilder();
-        try {
-          builder.mergeFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(builder.buildPartial());
-        } catch (com.google.protobuf.UninitializedMessageException e) {
-          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e)
-              .setUnfinishedMessage(builder.buildPartial());
-        }
-        return builder.buildPartial();
-      }
-    };
-
-    public static com.google.protobuf.Parser<DataList> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<DataList> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public Data.DataList getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface MaskListOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:MaskList)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>repeated int32 values = 1;</code>
-     * @return A list containing the values.
-     */
-    java.util.List<java.lang.Integer> getValuesList();
-    /**
-     * <code>repeated int32 values = 1;</code>
-     * @return The count of values.
-     */
-    int getValuesCount();
-    /**
-     * <code>repeated int32 values = 1;</code>
-     * @param index The index of the element to return.
-     * @return The values at the given index.
-     */
-    int getValues(int index);
-  }
-  /**
-   * Protobuf type {@code MaskList}
-   */
-  public static final class MaskList extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:MaskList)
-      MaskListOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use MaskList.newBuilder() to construct.
-    private MaskList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private MaskList() {
-      values_ = emptyIntList();
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new MaskList();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return Data.internal_static_MaskList_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return Data.internal_static_MaskList_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              Data.MaskList.class, Data.MaskList.Builder.class);
-    }
-
-    public static final int VALUES_FIELD_NUMBER = 1;
-    @SuppressWarnings("serial")
-    private com.google.protobuf.Internal.IntList values_;
-    /**
-     * <code>repeated int32 values = 1;</code>
-     * @return A list containing the values.
-     */
-    @java.lang.Override
-    public java.util.List<java.lang.Integer>
-        getValuesList() {
-      return values_;
-    }
-    /**
-     * <code>repeated int32 values = 1;</code>
-     * @return The count of values.
-     */
-    public int getValuesCount() {
-      return values_.size();
-    }
-    /**
-     * <code>repeated int32 values = 1;</code>
-     * @param index The index of the element to return.
-     * @return The values at the given index.
-     */
-    public int getValues(int index) {
-      return values_.getInt(index);
-    }
-    private int valuesMemoizedSerializedSize = -1;
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (getValuesList().size() > 0) {
-        output.writeUInt32NoTag(10);
-        output.writeUInt32NoTag(valuesMemoizedSerializedSize);
-      }
-      for (int i = 0; i < values_.size(); i++) {
-        output.writeInt32NoTag(values_.getInt(i));
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      {
-        int dataSize = 0;
-        for (int i = 0; i < values_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(values_.getInt(i));
-        }
-        size += dataSize;
-        if (!getValuesList().isEmpty()) {
-          size += 1;
-          size += com.google.protobuf.CodedOutputStream
-              .computeInt32SizeNoTag(dataSize);
-        }
-        valuesMemoizedSerializedSize = dataSize;
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof Data.MaskList)) {
-        return super.equals(obj);
-      }
-      Data.MaskList other = (Data.MaskList) obj;
-
-      if (!getValuesList()
-          .equals(other.getValuesList())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (getValuesCount() > 0) {
-        hash = (37 * hash) + VALUES_FIELD_NUMBER;
-        hash = (53 * hash) + getValuesList().hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static Data.MaskList parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Data.MaskList parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Data.MaskList parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Data.MaskList parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Data.MaskList parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Data.MaskList parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Data.MaskList parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static Data.MaskList parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static Data.MaskList parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static Data.MaskList parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static Data.MaskList parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static Data.MaskList parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(Data.MaskList prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code MaskList}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:MaskList)
-        Data.MaskListOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return Data.internal_static_MaskList_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return Data.internal_static_MaskList_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                Data.MaskList.class, Data.MaskList.Builder.class);
-      }
-
-      // Construct using Data.MaskList.newBuilder()
-      private Builder() {
-
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        values_ = emptyIntList();
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return Data.internal_static_MaskList_descriptor;
-      }
-
-      @java.lang.Override
-      public Data.MaskList getDefaultInstanceForType() {
-        return Data.MaskList.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public Data.MaskList build() {
-        Data.MaskList result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public Data.MaskList buildPartial() {
-        Data.MaskList result = new Data.MaskList(this);
-        buildPartialRepeatedFields(result);
-        if (bitField0_ != 0) { buildPartial0(result); }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartialRepeatedFields(Data.MaskList result) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          values_.makeImmutable();
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.values_ = values_;
-      }
-
-      private void buildPartial0(Data.MaskList result) {
-        int from_bitField0_ = bitField0_;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof Data.MaskList) {
-          return mergeFrom((Data.MaskList)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(Data.MaskList other) {
-        if (other == Data.MaskList.getDefaultInstance()) return this;
-        if (!other.values_.isEmpty()) {
-          if (values_.isEmpty()) {
-            values_ = other.values_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureValuesIsMutable();
-            values_.addAll(other.values_);
-          }
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8: {
-                int v = input.readInt32();
-                ensureValuesIsMutable();
-                values_.addInt(v);
-                break;
-              } // case 8
-              case 10: {
-                int length = input.readRawVarint32();
-                int limit = input.pushLimit(length);
-                ensureValuesIsMutable();
-                while (input.getBytesUntilLimit() > 0) {
-                  values_.addInt(input.readInt32());
-                }
-                input.popLimit(limit);
-                break;
-              } // case 10
-              default: {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-      private int bitField0_;
-
-      private com.google.protobuf.Internal.IntList values_ = emptyIntList();
-      private void ensureValuesIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
-          values_ = mutableCopy(values_);
-          bitField0_ |= 0x00000001;
-        }
-      }
-      /**
-       * <code>repeated int32 values = 1;</code>
-       * @return A list containing the values.
-       */
-      public java.util.List<java.lang.Integer>
-          getValuesList() {
-        return ((bitField0_ & 0x00000001) != 0) ?
-                 java.util.Collections.unmodifiableList(values_) : values_;
-      }
-      /**
-       * <code>repeated int32 values = 1;</code>
-       * @return The count of values.
-       */
-      public int getValuesCount() {
-        return values_.size();
-      }
-      /**
-       * <code>repeated int32 values = 1;</code>
-       * @param index The index of the element to return.
-       * @return The values at the given index.
-       */
-      public int getValues(int index) {
-        return values_.getInt(index);
-      }
-      /**
-       * <code>repeated int32 values = 1;</code>
-       * @param index The index to set the value at.
-       * @param value The values to set.
-       * @return This builder for chaining.
-       */
-      public Builder setValues(
-          int index, int value) {
-        
-        ensureValuesIsMutable();
-        values_.setInt(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated int32 values = 1;</code>
-       * @param value The values to add.
-       * @return This builder for chaining.
-       */
-      public Builder addValues(int value) {
-        
-        ensureValuesIsMutable();
-        values_.addInt(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated int32 values = 1;</code>
-       * @param values The values to add.
-       * @return This builder for chaining.
-       */
-      public Builder addAllValues(
-          java.lang.Iterable<? extends java.lang.Integer> values) {
-        ensureValuesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, values_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated int32 values = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearValues() {
-        values_ = emptyIntList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:MaskList)
-    }
-
-    // @@protoc_insertion_point(class_scope:MaskList)
-    private static final Data.MaskList DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new Data.MaskList();
-    }
-
-    public static Data.MaskList getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<MaskList>
-        PARSER = new com.google.protobuf.AbstractParser<MaskList>() {
-      @java.lang.Override
-      public MaskList parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        Builder builder = newBuilder();
-        try {
-          builder.mergeFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(builder.buildPartial());
-        } catch (com.google.protobuf.UninitializedMessageException e) {
-          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e)
-              .setUnfinishedMessage(builder.buildPartial());
-        }
-        return builder.buildPartial();
-      }
-    };
-
-    public static com.google.protobuf.Parser<MaskList> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<MaskList> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public Data.MaskList getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_DataPoint_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_DataPoint_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_DataList_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_DataList_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_MaskList_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_MaskList_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2802,11 +1285,10 @@ public final class Data {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\ndata.proto\"Z\n\tDataPoint\022\r\n\005index\030\001 \001(\003" +
-      "\022\014\n\004time\030\002 \001(\001\022\027\n\004data\030\003 \003(\0132\t.DataList\022" +
-      "\027\n\004mask\030\004 \003(\0132\t.MaskList\"\032\n\010DataList\022\016\n\006" +
-      "values\030\001 \003(\001\"\032\n\010MaskList\022\016\n\006values\030\001 \003(\005" +
-      "b\006proto3"
+      "\n\ndata.proto\"d\n\tDataPoint\022\r\n\005index\030\001 \001(\003" +
+      "\022\014\n\004time\030\002 \001(\001\022\014\n\004data\030\003 \003(\001\022\014\n\004mask\030\004 \003" +
+      "(\005\022\016\n\006C_SIZE\030\005 \001(\005\022\016\n\006X_SIZE\030\006 \001(\005b\006prot" +
+      "o3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -2817,19 +1299,7 @@ public final class Data {
     internal_static_DataPoint_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_DataPoint_descriptor,
-        new java.lang.String[] { "Index", "Time", "Data", "Mask", });
-    internal_static_DataList_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_DataList_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_DataList_descriptor,
-        new java.lang.String[] { "Values", });
-    internal_static_MaskList_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_MaskList_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_MaskList_descriptor,
-        new java.lang.String[] { "Values", });
+        new java.lang.String[] { "Index", "Time", "Data", "Mask", "CSIZE", "XSIZE", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

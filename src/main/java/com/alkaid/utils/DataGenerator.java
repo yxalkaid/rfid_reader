@@ -234,6 +234,7 @@ public class DataGenerator {
     private void scheduledSend() {
         Buffer oldBuffer = this.buffer.getAndSet(bufferPool.swap());
 
+        logger.info("scheduledSend: " + oldBuffer.totalCount);
         if (oldBuffer.totalCount == 0) {
             return;
         }
@@ -265,17 +266,18 @@ public class DataGenerator {
 
         Data.DataPoint.Builder dataBuilder = Data.DataPoint.newBuilder()
                 .setIndex(dataIndex++)
-                .setTime(timestamp);
+                .setTime(timestamp)
+                .setCSIZE(antennaCount)
+                .setXSIZE(tagCount);
 
         for (int a = 0; a < antennaCount; a++) {
-            Data.DataList.Builder dataListBuilder = Data.DataList.newBuilder();
             int[] antennaTotal = buffer.sumData[a];
-
             for (int t = 0; t < tagCount; t++) {
+
+                // 计算均值
                 double value = (double) antennaTotal[t];
-                dataListBuilder.addValues(value / totalRecords);
+                dataBuilder.addData(value / totalRecords);
             }
-            dataBuilder.addData(dataListBuilder.build());
         }
 
         return dataBuilder.build();

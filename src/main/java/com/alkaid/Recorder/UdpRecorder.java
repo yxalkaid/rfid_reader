@@ -55,6 +55,7 @@ public class UdpRecorder extends BaseRecorder {
     @Override
     public void stop() {
         super.stop();
+        logger.info("TotalRecordCount: "+recordCount);
         if(this.dataGenerator != null){
             this.dataGenerator.stop();
         }
@@ -112,7 +113,6 @@ public class UdpRecorder extends BaseRecorder {
         }
         
         this.recordCount += 1;
-        System.out.print("\rRecordCount: " + recordCount);
         this.dataGenerator.addData(antenna, EPC, channel, phase);
     }
 }

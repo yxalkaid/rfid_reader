@@ -1,4 +1,9 @@
 # RFID_READER
+
+## 依赖
+1. ltkjava-10.16.0.240
+2. javacsv
+
 ```
 rfid_reader
 ├─ pom.xml
